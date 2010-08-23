@@ -1,0 +1,50 @@
+This file contains message digests of all files listed in MANIFEST,
+signed via the Module::Signature module, version 0.63.
+
+To verify the content in this distribution, first make sure you have
+Module::Signature installed, then type:
+
+    % cpansign -v
+
+It will check each file's integrity, as well as the signature's
+validity.  If "==> Signature verified OK! <==" is not displayed,
+the distribution may already have been compromised, and you should
+not run its Makefile.PL or Build.PL.
+
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+SHA1 842745cb706f8f2126506f544492f7a80dbe29b3 COPYING
+SHA1 7d53d7307ed4f6eab76f1db9bb6d39b4f69c13a5 Changes
+SHA1 1b98d4d4137579766a19e107f5b3d9f93ba9b3f7 MANIFEST
+SHA1 9f057ed3ba7d042426c4d899f7685b4ae05076b2 MANIFEST.SKIP
+SHA1 abd159bda005696742288d2b87f0c0a664f496eb META.yml
+SHA1 dd01622d5f7867b95997d746511b55089956081c Makefile.PL
+SHA1 8868b977e4fd4a6171ffda8b546dfeb8a17f0023 debian/changelog
+SHA1 ac3478d69a3c81fa62e60f5c3696165a4e5e6ac4 debian/compat
+SHA1 ba615bc4434696b654f142d749f51deece17890d debian/control
+SHA1 72ace0ce4498815cda4dc0fab7f5968e55023d4d debian/copyright
+SHA1 bb3e8f7e8ed07ff03654bdb01c6bdf22e86cc044 debian/rules
+SHA1 61652cd1568dcf2614df833eba241755eee34e89 debian/source/format
+SHA1 f27d0e82f3daff43b34aae35bdc7f836051fe246 debian/watch
+SHA1 21df81cefb28e806324bcf883ce19b984ed121bf devel/misc.pl
+SHA1 63b02efef44c668dc364b5f27462dacfa1577814 devel/unaccent.pl
+SHA1 0a6017ed40701aaeb41b406d25139d88d33e4c35 inc/MyMakeMakerExtras.pm
+SHA1 692a1ddc2ca6b98cac7b48ea40bc1ac1509e8ed9 inc/my_pod2html
+SHA1 950704f8ac3bdad2c68b3f2c3525ffea80ca0c60 lib/Math/Aronson.pm
+SHA1 9127f78a0dfa04976acbb979dd7862ef59a74c58 t/0-META-read.t
+SHA1 37abd43b41068804ea4bb099fdd89af21be82926 t/0-Test-DistManifest.t
+SHA1 8f93fb4c8f0424a4442cc93c9a2e86342ef55281 t/0-Test-Pod.t
+SHA1 1de8f07883f6bf1a2ef79f2cb8adf1deb3f61cee t/0-Test-Synopsis.t
+SHA1 fb517c2fae5ddac559318bf6a224949115ea3129 t/0-Test-YAML-Meta.t
+SHA1 87ef6f4ed6db27dd3df0ebdef65737585bcb438e t/Aronson-weaken.t
+SHA1 7f301ac45cf9c45ae9667f4de91dd545b2788fde t/Aronson.t
+SHA1 b98ec63aaa140101fe850d117c483d88b25a32a9 t/MyTestHelpers.pm
+SHA1 06b321c36977d841dedc60d0e4afb7d59ce1bd6f t/Test/Weaken/ExtraBits.pm
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+
+iD8DBQFMcvM+LFMCIV9q3ToRAtz2AJ9UNsYXeLBxAzV2jcfPiLN4f1jouQCdGI1p
+ln94JYlzXIEEWaztWVJPvsk=
+=VcSH
+-----END PGP SIGNATURE-----

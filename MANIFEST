@@ -1,0 +1,28 @@
+Changes
+COPYING
+debian/changelog
+debian/compat
+debian/control
+debian/copyright
+debian/rules
+debian/source/format
+debian/watch
+devel/misc.pl
+devel/unaccent.pl
+inc/my_pod2html
+inc/MyMakeMakerExtras.pm
+lib/Math/Aronson.pm
+Makefile.PL
+MANIFEST			This list of files
+MANIFEST.SKIP
+SIGNATURE
+t/0-META-read.t
+t/0-Test-DistManifest.t
+t/0-Test-Pod.t
+t/0-Test-Synopsis.t
+t/0-Test-YAML-Meta.t
+t/Aronson-weaken.t
+t/Aronson.t
+t/MyTestHelpers.pm
+t/Test/Weaken/ExtraBits.pm
+META.yml                                 Module meta-data (added by MakeMaker)
