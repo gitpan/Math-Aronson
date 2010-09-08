@@ -20,7 +20,7 @@
 use 5.004;
 use strict;
 use warnings;
-use Test::More tests => 9;
+use Test::More tests => 14;
 
 use lib 't';
 use MyTestHelpers;
@@ -33,7 +33,7 @@ require Math::Aronson;
 # VERSION
 
 {
-  my $want_version = 1;
+  my $want_version = 2;
   is ($Math::Aronson::VERSION, $want_version, 'VERSION variable');
   is (Math::Aronson->VERSION,  $want_version, 'VERSION class method');
 
@@ -47,6 +47,29 @@ require Math::Aronson;
 #------------------------------------------------------------------------------
 
 foreach my $elem (
+                  [ "default en",
+                    { },
+                    [ 1, 4, 11, 16, 24, 29, 33 ] ],
+
+                  [ "explicit letter=T",
+                    { letter => 'T' },
+                    [ 1, 4, 11, 16, 24, 29, 33 ] ],
+
+                  [ "pod example initial_string => 'F is the'",
+                    { initial_string => 'F is the' },
+                    [ 1, 7 ] ],
+
+                  [ "letter=F",
+                    { letter => 'F' },
+                    [ 1, 7 ] ],
+
+                  [ "letter=H",
+                    { letter => 'H' },
+                    # H is the first, fifth, sixteenth
+                    # 1 23 456 78901  23456  789012345
+                    # ^     ^             ^
+                    [ 1, 5, 16, 25 ] ],
+
                   [ "en",
                     { lang => 'en' },
                     [ 1, 4, 11, 16, 24, 29, 33, 35, 39, 45, 47, 51, 56, 58,

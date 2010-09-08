@@ -25,7 +25,12 @@ use Carp;
 #use Smart::Comments;
 
 use vars '$VERSION';
-$VERSION = 1;
+$VERSION = 2;
+
+
+# maybe a hi=>$limit option to stop the ret or queue building up beyond a
+# desired point
+
 
 my $unaccent;
 BEGIN {
@@ -48,8 +53,14 @@ BEGIN {
 #                   ($nfd =~ /^([[:ascii:]])/ ? $1 : $c)
 #                 }ge;
 
+my %default_letter = ('en' => 'T',
+                      'fr' => 'E');
+my %default_initial_string = ('en' => 'is the',
+                              'fr' => 'est la');
 sub new {
   my $class = shift;
+  ### Aronson new(): @_
+
   my @ret;
   my $self = bless { ret   => \@ret,
                      queue => [ ],
@@ -59,12 +70,10 @@ sub new {
 
   my $lang = delete $self->{'lang'};
   if ($lang eq 'fr') {
-    %$self = (initial_string => 'e est la',
-              conjunctions_word => 'et',
+    %$self = (conjunctions_word => 'et',
               %$self);
   } elsif ($lang eq 'en') {
-    %$self = (initial_string => 't is the',
-              conjunctions_word => 'and',
+    %$self = (conjunctions_word => 'and',
               %$self);
   }
 
@@ -97,17 +106,34 @@ sub new {
          : \&_conjunctions_noop);  # no change to strings
 
   my $str = delete $self->{'initial_string'};
+  my $letter = $self->{'letter'};
+
   if (! defined $str) {
-    croak 'No initial_string';
+    if (! $letter) {
+      # default 'T' for en or 'E' for fr
+      $letter = $default_letter{$lang};
+    }
+    if (! defined ($str = $default_initial_string{$lang})) {
+      croak 'No default initial_string for language \'',$lang,'\'';
+    }
+    $str = $letter . $str;
   }
+
   &$unaccent ($str);
   $str = lc ($str);
 
-  my $letter = $self->{'letter'};
+  &$without_conjunctions_func ($str);
+  $str =~ s/[[:punct:][:space:]]+//g;  # strip non alphas
+  ### initial: $str
+
   if (! defined $letter) {
-    # default first alphabetical in 'initial_string'
-    $letter = substr($str,0,1);
+    if (defined $str) {
+      # initial_string but no letter, take letter as first alphabetical
+      $letter = substr($str,0,1);
+    } else {
+    }
   }
+
   unless (length($letter)) {
     # empty string no good as will match endlessly, change to a space which
     # will never match
@@ -115,9 +141,6 @@ sub new {
   }
   $self->{'letter'} = $letter = lc($letter);
 
-  &$without_conjunctions_func ($str);
-  $str =~ s/[[:punct:][:space:]]+//g;  # strip non alphas
-  ### initial: $str
   my $upto = 1;
   my $pos = 0;
   while (($pos = index($str,$letter,$pos)) >= 0) {
@@ -133,7 +156,7 @@ sub _conjunctions_noop {
 
 sub _fr_ordinal {
   my $str = Lingua::FR::Numbers::ordinate_to_fr($_[0]);
-  # FIXME: "premiere" is per Sloane's sequence, should this be an option?
+  # Feminine "E est la premiere lettre ..."
   if ($str eq 'premier') { $str = 'premiere'; }
   return $str;
 }
@@ -193,7 +216,8 @@ Math::Aronson -- generate values of Aronson's sequence
 =head1 DESCRIPTION
 
 This is a bit of fun generating Aronson's sequence of numbers formed by
-self-referential occurrences of letter T in numbers written out in words.
+self-referential occurrences of the letter T in numbers written out in
+words.
 
     T is the first, fourth, eleventh, sixteenth, ...
     ^    ^       ^      ^         ^      ^   ^
@@ -205,7 +229,8 @@ those words there are further Ts at 11 and 16, so those numbers are
 appended, and so on.
 
 Spaces and punctuation are ignored.  Accents like acutes are stripped for
-matching.  The C<without_conjunctions> option can ignore "and" or "et" too.
+letter matching.  The C<without_conjunctions> option can ignore "and" or
+"et" too.
 
 =head2 Sloane's OEIS
 
@@ -219,22 +244,23 @@ The English A005224 is without conjunctions, so is generated with
 
     $it = Math::Aronson->new (without_conjunctions => 1);
 
-But the French A080520 is with them, so it's just
+But the French A080520 is with them, so just
 
     $it = Math::Aronson->new (lang => 'fr');
 
 =head2 Termination
 
-It's possible for the English sequence to end, since there's no T in some
-numbers, except there doesn't seem enough of those, or the sequence doesn't
+It's possible for the English sequence to end since there's no T in some
+numbers, but there doesn't seem enough of those, or the sequence doesn't
 fall on enough of them.  (Is that proven?)
 
 But for example using letter "F" instead gives a finite sequence,
 
-    $it = Math::Aronson->new (initial_string => 'F is the');
+    $it = Math::Aronson->new (letter => 'F');
 
-This is 1, 4, 9 per "F is the first, fourth, ninth" but ends there as
-there's no more "F"s in "ninth".
+This is 1, 7, 12 per "F is the first, seventh" but ends there as there's no
+more "F"s in "seventh".  See F<examples/terminate.pl> in the sources to run
+thorough which letters seem to terminate or not.
 
 =head1 FUNCTIONS
 
@@ -259,21 +285,40 @@ C<Lingua::Any::Numbers>.  "en" and "fr" have defaults for the options below.
 
 =item C<< initial_string => $str >>
 
-The initial string for the sequence.  The default is "T is the" for English
-or "E est la" for French.  For other languages an C<initial_string> must be
-given or the sequence is empty.
+The initial string for the sequence.  The default is
+
+    English    "T is the"
+    French     "E est la"    
+
+For other languages there's no default yet and an C<initial_string> must be
+given.
 
 =item C<< letter => $str >>
 
 The letter to look for in the words.  The default is the first letter of
-C<initial_string>, so "T" for English or or "E" for French.
+C<initial_string>.
+
+When a C<letter> is given the default C<initial_string> follows that, so "X
+is the" or "X est la".
+
+   $it = Math::Aronson->new (letter => 'H');
+   # is 1, 5, 16, 25, ...
+   # per "H is the first, fifth, ..."
+
+C<letter> and C<initial_string> can be given together to use a letter not at
+the start of the C<initial_string>.  For example,
+
+   $it = Math::Aronson->new (letter => 'T',
+                             initial_string => "I think T is");
+   # is 2, 7, 21, 23, ...
+   # per "I think T is second, seventh, twenty-first, ..."
 
 =item C<< without_conjunctions => $boolean >> (default false)
 
-Strip conjunctions, meaning "and" in the wording, so for instance "one
-hundred and four" becomes "one hundred four".  The default is keep whatever
-conjunctions C<Lingua::Any::Numbers> (or the C<ordinal_func> below) gives
-unchanged.
+Strip conjunctions, meaning "and"s, in the wording so for instance "one
+hundred and four" becomes "one hundred four".  The default is leave
+unchanged whatever conjunctions C<Lingua::Any::Numbers> (or C<ordinal_func>
+below) gives.
 
 =item C<< conjunctions_word => $string >> (default "and" or "et")
 
@@ -283,17 +328,16 @@ there's no default.
 
 =item C<< ordinal_func => $coderef >> (default Lingua modules)
 
-A function to call to turn a number into words,
+A function to call to turn a number into words.  Each call is
 
     $str = &$ordinal_func ($n);
 
-The default is to call C<to_ordinal($n,$lang)> from C<Lingua::Any::Numbers>,
-or for English and French directly to the underlying C<Lingua::EN::Numbers>
-or C<Lingua::FR::Numbers>.  The string can be wide chars.
+The default is a call C<to_ordinal($n,$lang)> of C<Lingua::Any::Numbers>, or
+for English and French a direct call to C<Lingua::EN::Numbers> or
+C<Lingua::FR::Numbers>.  The string returned can be wide chars.
 
-C<Lingua::Any::Numbers> brings uniformity to the several number to words
-modules, but if there's one not supported you can given an explicit
-C<ordinal_func>.
+An explicit C<ordinal_func> can be used if C<Lingua::Any::Numbers> doesn't
+support a desired language, or perhaps for a bit of rewording.
 
     $it = Math::Aronson->new
              (ordinal_func => sub {
@@ -302,7 +346,7 @@ C<ordinal_func>.
               });
 
 There's nothing to select a gender from C<Lingua::Any::Numbers>, as of
-version 0.30, so an C<ordinal_func> could be used for instance to get
+version 0.30, so an C<ordinal_func> might be used for instance to get
 feminine forms from C<Lingua::ES::Numbers>.
 
 =back
@@ -318,9 +362,9 @@ feminine forms from C<Lingua::ES::Numbers>.
 Return the next number in the sequence, being the next position of T (or
 whatever letter) in the text.  The first position is 1.
 
-If the end of the sequence has been reached the return is an empty list
-(which means C<undef> in scalar context).  Since positions begin at 1 a loop
-can be simply
+If the end of the sequence has been reached then the return is an empty list
+(which means C<undef> in scalar context).  Because positions begin at 1 a
+loop can be simply
 
     while (my $n = $it->next) {
       ...
@@ -328,15 +372,43 @@ can be simply
 
 =back
 
+=head1 OTHER NOTES
+
+Accents are stripped for letter matches using C<Unicode::Normalize> if
+available, which means Perl 5.8.0 and higher, or a built-in Latin-1 table as
+a fallback otherwise.  That Latin-1 suits C<Lingua::FR::Numbers> and should
+suit most of the European numbers modules.
+
+The use of the Lingua modules and string crunching means C<next> probably
+isn't blindingly fast.  It'd be possible to go numbers-only with the rules
+for ordinal words but generating just the positions of the "T"s or whatever
+desired letter, but that doesn't seem worth the effort.
+
 =head1 SEE ALSO
 
 L<Lingua::Any::Numbers>,
 L<Lingua::EN::Numbers>,
 L<Lingua::FR::Numbers>
 
+=head1 HOME PAGE
+
+http://user42.tuxfamily.org/math-aronson/index.html
+
+=head1 LICENSE
+
+Math-Aronson is Copyright 2010 Kevin Ryde
+
+Math-Aronson is free software; you can redistribute it and/or modify it
+under the terms of the GNU General Public License as published by the Free
+Software Foundation; either version 3, or (at your option) any later
+version.
+
+Math-Aronson is distributed in the hope that it will be useful, but WITHOUT
+ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+more details.
+
+You should have received a copy of the GNU General Public License along with
+Math-Aronson.  If not, see <http://www.gnu.org/licenses/>.
+
 =cut
-
-# =item C<< hi => $integer >>, default C<undef>
-# 
-# The highest value desired from the sequence object.
-

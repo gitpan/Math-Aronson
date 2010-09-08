@@ -1,6 +1,6 @@
 --- #YAML:1.0
 name:               Math-Aronson
-version:            1
+version:            2
 abstract:           Generate Aronson's sequence.
 author:
     - Kevin Ryde <user42@zip.com.au>
@@ -25,6 +25,7 @@ no_index:
         - t
         - inc
         - devel
+        - examples
 generated_by:       ExtUtils::MakeMaker version 6.55_02
 meta-spec:
     url:      http://module-build.sourceforge.net/META-spec-v1.4.html
@@ -35,7 +36,6 @@ optional_features:
         requires:
             Lingua::ES::Numeros:  0
             PerlIO::locale:       0.06
-            Pod::Simple::HTML:    0
             Smart::Comments:      0
             Unicode::CharName:    0
             Unicode::Normalize:   0
