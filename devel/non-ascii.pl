@@ -32,8 +32,11 @@ foreach my $lang (Lingua::Any::Numbers::available()) {
     #     if ($str =~ /[^\0-\377]/) {
     #       say "$lang $n  $str";
     #     }
-    if ($str =~ /[^[:ascii:]]/) {
-      say "$lang $n  $str";
+    if ($str =~ /([^[:ascii:]])/) {
+      my $char = $1;
+      my $ord = sprintf "%#X", ord($char);
+      my $wide = (utf8::is_utf8($str) ? "wide " : "bytes");
+      say "$lang $n $wide $ord   $str";
       last;
     }
   }

@@ -25,7 +25,7 @@ use Carp;
 #use Smart::Comments;
 
 use vars '$VERSION';
-$VERSION = 2;
+$VERSION = 3;
 
 
 # maybe a hi=>$limit option to stop the ret or queue building up beyond a

@@ -33,7 +33,7 @@ require Math::Aronson;
 # VERSION
 
 {
-  my $want_version = 2;
+  my $want_version = 3;
   is ($Math::Aronson::VERSION, $want_version, 'VERSION variable');
   is (Math::Aronson->VERSION,  $want_version, 'VERSION class method');
 

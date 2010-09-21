@@ -15,12 +15,12 @@ not run its Makefile.PL or Build.PL.
 Hash: SHA1
 
 SHA1 842745cb706f8f2126506f544492f7a80dbe29b3 COPYING
-SHA1 cb844f1d21268b50c1854933e89e6f9cc9bd720e Changes
-SHA1 cc582f0b091e699a49362ed79bd07502320ef849 MANIFEST
-SHA1 9f057ed3ba7d042426c4d899f7685b4ae05076b2 MANIFEST.SKIP
-SHA1 b7c60412aaa3365df390776677bbd5bb8b5c8ffd META.yml
+SHA1 c9014128f163bd864d3b23f9009cfa2083748de9 Changes
+SHA1 30a880a75bf88267fab47fdcd3aca14a66171d1b MANIFEST
+SHA1 e6e7c2904ea5d300c0ddf70fc5a80f5005229aa9 MANIFEST.SKIP
+SHA1 602d854223045f744e0d6099ecb1700b9016c67f META.yml
 SHA1 dd01622d5f7867b95997d746511b55089956081c Makefile.PL
-SHA1 06d85b9cb6ba1636961ecb67973c74c46b8ac935 debian/changelog
+SHA1 208c54dce96c91d48406dab26a5d2f60f369785d debian/changelog
 SHA1 ac3478d69a3c81fa62e60f5c3696165a4e5e6ac4 debian/compat
 SHA1 ba615bc4434696b654f142d749f51deece17890d debian/control
 SHA1 72ace0ce4498815cda4dc0fab7f5968e55023d4d debian/copyright
@@ -28,26 +28,26 @@ SHA1 260a610f68684b44c17a69faa0ca408fd9c8107a debian/rules
 SHA1 61652cd1568dcf2614df833eba241755eee34e89 debian/source/format
 SHA1 f27d0e82f3daff43b34aae35bdc7f836051fe246 debian/watch
 SHA1 e7f543ff80e87dc2d588ebccd3ce3106afb23208 devel/misc.pl
-SHA1 12a1647514b1d8e59e24686cc2fc188b8292e78a devel/non-ascii.pl
+SHA1 93b4d08ebdff5b7aae51710ea718c9059b087d9f devel/non-ascii.pl
 SHA1 69c1f962400ab58523232eb016115f95f6a49e23 devel/run.pl
 SHA1 63b02efef44c668dc364b5f27462dacfa1577814 devel/unaccent.pl
 SHA1 80918f0f327882d81d02a37110af84f8cad421d1 examples/terminate.pl
-SHA1 baa31d87e4e949e1bdf4572dbed454a6a749cf0f inc/MyMakeMakerExtras.pm
-SHA1 db905cb0f9cbddc69b099250e3b003767f26eeff lib/Math/Aronson.pm
-SHA1 9127f78a0dfa04976acbb979dd7862ef59a74c58 t/0-META-read.t
-SHA1 37abd43b41068804ea4bb099fdd89af21be82926 t/0-Test-DistManifest.t
-SHA1 8f93fb4c8f0424a4442cc93c9a2e86342ef55281 t/0-Test-Pod.t
-SHA1 1de8f07883f6bf1a2ef79f2cb8adf1deb3f61cee t/0-Test-Synopsis.t
-SHA1 fb517c2fae5ddac559318bf6a224949115ea3129 t/0-Test-YAML-Meta.t
+SHA1 3cf3345a9177dbe362dfc8fbf192272f4a611ca8 inc/MyMakeMakerExtras.pm
+SHA1 eef23d019830cc26bef6fdaf4de219b95b13fe62 lib/Math/Aronson.pm
 SHA1 9450c0212c441b3994144cceba7cb7508629256f t/Aronson-ithreads.t
 SHA1 87ef6f4ed6db27dd3df0ebdef65737585bcb438e t/Aronson-weaken.t
-SHA1 85380a3b8996565d3c52834d3cbe2ae429bf3fcc t/Aronson.t
-SHA1 cc9d34bca6c40211dd6aa8fee844bb1a7f908461 t/MyTestHelpers.pm
+SHA1 5ba8bfb723f539991747270e1bf79b5b26316ab4 t/Aronson.t
+SHA1 5e5680b471811244fe93571efc23e7b6089cac3b t/MyTestHelpers.pm
 SHA1 06b321c36977d841dedc60d0e4afb7d59ce1bd6f t/Test/Weaken/ExtraBits.pm
+SHA1 9127f78a0dfa04976acbb979dd7862ef59a74c58 xt/0-META-read.t
+SHA1 37abd43b41068804ea4bb099fdd89af21be82926 xt/0-Test-DistManifest.t
+SHA1 8f93fb4c8f0424a4442cc93c9a2e86342ef55281 xt/0-Test-Pod.t
+SHA1 1de8f07883f6bf1a2ef79f2cb8adf1deb3f61cee xt/0-Test-Synopsis.t
+SHA1 fb517c2fae5ddac559318bf6a224949115ea3129 xt/0-Test-YAML-Meta.t
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.10 (GNU/Linux)
 
-iD8DBQFMiAQYLFMCIV9q3ToRAhdtAJ9Z8wqs88JFH4q2z6JwDmk3UD+SvQCfSK6x
-6+65s/QxrSE/Kh5yOgY0hPw=
-=h/hy
+iD8DBQFMl/1pLFMCIV9q3ToRAs8BAKCtp8bZHcvGgj6PaJe79861rU+JcgCdEBbC
+A5LcGwBrx4omG92dqWUauV8=
+=c45x
 -----END PGP SIGNATURE-----

@@ -16,6 +16,10 @@ You can get a copy of the GNU General Public License online at
 <http://www.gnu.org/licenses/>.
 
 
+
+Version 3, September 2010
+    - test manifest only as an author test
+
 Version 2, September 2010
     - letter option affect default initial_string
 
