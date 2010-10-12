@@ -4,12 +4,14 @@ debian/changelog
 debian/compat
 debian/control
 debian/copyright
+debian/patches/pod-examples-dir.diff
 debian/rules
 debian/source/format
 debian/watch
 devel/misc.pl
 devel/non-ascii.pl
 devel/run.pl
+devel/sloane-a.pl
 devel/unaccent.pl
 examples/terminate.pl
 inc/MyMakeMakerExtras.pm

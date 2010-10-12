@@ -1,5 +1,5 @@
 This file contains message digests of all files listed in MANIFEST,
-signed via the Module::Signature module, version 0.63.
+signed via the Module::Signature module, version 0.66.
 
 To verify the content in this distribution, first make sure you have
 Module::Signature installed, then type:
@@ -15,28 +15,30 @@ not run its Makefile.PL or Build.PL.
 Hash: SHA1
 
 SHA1 842745cb706f8f2126506f544492f7a80dbe29b3 COPYING
-SHA1 c9014128f163bd864d3b23f9009cfa2083748de9 Changes
-SHA1 30a880a75bf88267fab47fdcd3aca14a66171d1b MANIFEST
+SHA1 80a8bf9d7a2957bc25808e5ae5caed31d416fa95 Changes
+SHA1 bf6529f04671f0de2ef45eac8273a1a4d964f92c MANIFEST
 SHA1 e6e7c2904ea5d300c0ddf70fc5a80f5005229aa9 MANIFEST.SKIP
-SHA1 602d854223045f744e0d6099ecb1700b9016c67f META.yml
+SHA1 16f6e12912ed8af7de4c5b0906cd56c131516c60 META.yml
 SHA1 dd01622d5f7867b95997d746511b55089956081c Makefile.PL
-SHA1 208c54dce96c91d48406dab26a5d2f60f369785d debian/changelog
+SHA1 f9a847c7bc66fba1e3271e2e56604baa1679eb4c debian/changelog
 SHA1 ac3478d69a3c81fa62e60f5c3696165a4e5e6ac4 debian/compat
 SHA1 ba615bc4434696b654f142d749f51deece17890d debian/control
 SHA1 72ace0ce4498815cda4dc0fab7f5968e55023d4d debian/copyright
+SHA1 2dbc73a7cf261f7dc9c4b6e64c9aacc3cfc41307 debian/patches/pod-examples-dir.diff
 SHA1 260a610f68684b44c17a69faa0ca408fd9c8107a debian/rules
 SHA1 61652cd1568dcf2614df833eba241755eee34e89 debian/source/format
 SHA1 f27d0e82f3daff43b34aae35bdc7f836051fe246 debian/watch
 SHA1 e7f543ff80e87dc2d588ebccd3ce3106afb23208 devel/misc.pl
 SHA1 93b4d08ebdff5b7aae51710ea718c9059b087d9f devel/non-ascii.pl
-SHA1 69c1f962400ab58523232eb016115f95f6a49e23 devel/run.pl
+SHA1 917c3d60623055d9bc5927137a6130f4a1252088 devel/run.pl
+SHA1 49d75cb5e26480a6e73a758b4c9dfcb77eb6d47b devel/sloane-a.pl
 SHA1 63b02efef44c668dc364b5f27462dacfa1577814 devel/unaccent.pl
 SHA1 80918f0f327882d81d02a37110af84f8cad421d1 examples/terminate.pl
 SHA1 3cf3345a9177dbe362dfc8fbf192272f4a611ca8 inc/MyMakeMakerExtras.pm
-SHA1 eef23d019830cc26bef6fdaf4de219b95b13fe62 lib/Math/Aronson.pm
+SHA1 feea9135e825bc39cdec5377a7d278e5dc6ab9c7 lib/Math/Aronson.pm
 SHA1 9450c0212c441b3994144cceba7cb7508629256f t/Aronson-ithreads.t
 SHA1 87ef6f4ed6db27dd3df0ebdef65737585bcb438e t/Aronson-weaken.t
-SHA1 5ba8bfb723f539991747270e1bf79b5b26316ab4 t/Aronson.t
+SHA1 c860946ce245f803646195e4ea0cfa1ee1e1b337 t/Aronson.t
 SHA1 5e5680b471811244fe93571efc23e7b6089cac3b t/MyTestHelpers.pm
 SHA1 06b321c36977d841dedc60d0e4afb7d59ce1bd6f t/Test/Weaken/ExtraBits.pm
 SHA1 9127f78a0dfa04976acbb979dd7862ef59a74c58 xt/0-META-read.t
@@ -47,7 +49,7 @@ SHA1 fb517c2fae5ddac559318bf6a224949115ea3129 xt/0-Test-YAML-Meta.t
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.10 (GNU/Linux)
 
-iD8DBQFMl/1pLFMCIV9q3ToRAs8BAKCtp8bZHcvGgj6PaJe79861rU+JcgCdEBbC
-A5LcGwBrx4omG92dqWUauV8=
-=c45x
+iD8DBQFMtOwnLFMCIV9q3ToRAi8PAJ4gtPceevs1VWuNxkNJ7xGg+D5YSQCfdz0Q
+YANM0HxDgpaKwYoh11lMGzI=
+=eWx7
 -----END PGP SIGNATURE-----

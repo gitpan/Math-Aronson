@@ -20,7 +20,7 @@
 use 5.004;
 use strict;
 use warnings;
-use Test::More tests => 14;
+use Test::More tests => 20;
 
 use lib 't';
 use MyTestHelpers;
@@ -33,7 +33,7 @@ require Math::Aronson;
 # VERSION
 
 {
-  my $want_version = 3;
+  my $want_version = 4;
   is ($Math::Aronson::VERSION, $want_version, 'VERSION variable');
   is (Math::Aronson->VERSION,  $want_version, 'VERSION class method');
 
@@ -49,6 +49,10 @@ require Math::Aronson;
 foreach my $elem (
                   [ "default en",
                     { },
+                    [ 1, 4, 11, 16, 24, 29, 33 ] ],
+
+                  [ "lang=undef is en",
+                    { lang => undef },
                     [ 1, 4, 11, 16, 24, 29, 33 ] ],
 
                   [ "explicit letter=T",
@@ -79,9 +83,9 @@ foreach my $elem (
                       231, 237, 243, 249, 254, 273, 294, 312, 316, 331,
                       335, 356 ] ],
 
-                  # per Sloane's A005224
+                  # English T
                   # http://www.research.att.com/%7Enjas/sequences/A005224
-                  [ "en, without_conjunctions==1",
+                  [ "en, without_conjunctions=1",
                     { lang => 'en',
                       without_conjunctions => 1 },
                     [ 1, 4, 11, 16, 24, 29, 33, 35, 39, 45, 47, 51, 56, 58,
@@ -91,11 +95,60 @@ foreach my $elem (
                       231, 237, 243, 249, 254, 270, 288, 303, 307, 319,
                       323, 341 ] ],
 
-                  # per Sloane's A080520
+                  # English H
+                  # http://www.research.att.com/~njas/sequences/A055508
+                  [ "en, letter=H, without_conjunctions=1",
+                    { lang => 'en',
+                      without_conjunctions => 1,
+                      letter => 'H' },
+                    [ 1, 5, 16, 25, 36, 38, 47, 49, 57, 59, 71, 81, 93, 103,
+                      119, 134, 141, 149, 156, 172, 176, 184, 194, 198, 218,
+                      234, 238, 254, 258, 281, 299, 303, 313, 321, 325, 343,
+                      347, 363, 365, 369, 379, 385, 389, 397, 407, 411, 419,
+                      427, 429, 433, 450, 454, 469, 471, 475 ] ],
+
+                  # English I
+                  # http://www.research.att.com/~njas/sequences/A049525
+                  [ "en, letter=I, without_conjunctions=1",
+                    { lang => 'en',
+                      without_conjunctions => 1,
+                      letter => 'I' },
+                    [ 1, 2, 8, 19, 25, 41, 51, 56, 61, 66, 71, 76, 81, 86,
+                      91, 103, 115, 120, 126, 131, 137, 142, 148, 164, 178,
+                      201, 222, 238, 243, 259, 307, 323, 351, 367, 405, 410,
+                      432, 446, 451, 494, 510, 515, 532, 555, 588, 615, 631,
+                      636, 652, 664, 680, 691, 700, 712, 723, 734 ] ],
+
+                  # lying
+                  # http://www.research.att.com/~njas/sequences/A072886
+                  [ "lying",
+                    { lying => 1,
+                      initial_string => "S ain't the" },
+                    [ 2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 13, 14, 15, 16, 17,
+                      18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30,
+                      32, 33, 34, 35, 37, 38, 39, 40, 41, 42, 43, 44, 45,
+                      46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58,
+                      59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71,
+                      72, 73, 74, 75 ] ],
+
+                  # lying "S ain't"
+                  # http://www.research.att.com/~njas/sequences/A081023
+                  [ "lying, \"S ain't the\"",
+                    { lying => 1 },
+                    [ 2, 3, 5, 6, 7, 8, 9, 10, 11, 12, 14, 15, 16, 17, 18,
+                      19, 20, 22, 23, 24, 25, 27, 28, 29, 30, 31, 32, 34,
+                      35, 36, 37, 38, 40, 41, 42, 43, 45, 47, 48, 50, 51,
+                      52, 53, 54, 55, 56, 58, 60, 61, 62, 63, 65, 66, 67,
+                      68, 69, 71, 72, 73, 75 ] ],
+
+                  # complement ...
+                  # http://www.research.att.com/~njas/sequences/A072887
+                  # http://www.research.att.com/~njas/sequences/A081024
+
+                  # French
                   # http://www.research.att.com/%7Enjas/sequences/A080520
-                  [ "fr, conjunctions==1",
-                    { lang => 'fr',
-                      conjunctions => 1 },
+                  [ "fr",
+                    { lang => 'fr' },
                     [ 1, 2, 9, 12, 14, 16, 20, 22, 24, 28, 30, 36, 38, 47,
                       49, 51, 55, 57, 64, 66, 73, 77, 79, 91, 93, 104, 106,
                       109, 113, 115, 118, 121, 126, 128, 131, 134, 140, 142,
@@ -109,8 +162,21 @@ foreach my $elem (
                   [ "initial_string \"f is\"",
                     { initial_string => 'f is' },
                     # f is first, fourth, ninth
-                    # 1    4      9       
+                    # 1    4      9
                     [ 1, 4, 9, undef, undef ] ],
+
+                  [ "lying",
+                    { lying => 1 },
+                    # t is the second, third, fifth,
+                    #             1             2
+                    #   23  56 789012   4567  890 2
+                    #
+                    [ 2,3,
+                      5,6,
+                      7,8,9,10,11,12,
+                      14,15,16,17,
+                      18,19,20,22,
+                    ] ],
                  ) {
   my ($name, $options, $want) = @$elem;
   my $aronson = Math::Aronson->new (%$options);

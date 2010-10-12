@@ -17,30 +17,25 @@
 # You should have received a copy of the GNU General Public License along
 # with Math-Aronson.  If not, see <http://www.gnu.org/licenses/>.
 
-use 5.010;
 use strict;
 use warnings;
-use Math::Aronson;
 
-{
-  my $aronson = Math::Aronson->new (lang => 'en',
-                                    letter => 'F',
-                                    # initial_string => "I think T is",
-                                    # lying => 1,
-                                   );
-  ### $aronson
-  foreach (1 .. 50) {
-    say $aronson->next//last;
+# http://www.cs.uwaterloo.ca/journals/JIS/index.html
+# http://arxiv.org/abs/math.NT/0305308
+#
+# a(1) = 1, a(2) = 4, then a(9*2^k-3+j) = 12*2^k-3+3*j/2+|j|/2
+#  for k>=0, -3*2^k <= j <= 3*2^k.
+#
+#  Also a(3n) = 3*b(n/3), a(3n+1) = 2*b(n)+b(n+1), a(3n+2) = b(n)+2*b(n+1) for n>=2, where b = A079905. - N. J. A. Sloane (njas(AT)research.att.com) and Ben Cloitre, Feb 20, 2003
+
+foreach my $k (0 .. 5) {
+  print "k=$k\n";
+  foreach my $j ((-3 * 2**$k) .. (3 * 2**$k - 1)) {
+    my $i = 9 * 2**$k - 3 + $j;
+    my $a = 12*2**$k - 3 + (3*$j + abs($j))/2;
+    print "$i  $a\n";
   }
-  exit 0;
 }
 
-
-
-
-# http://www.research.att.com/~njas/sequences/A080520
-#
-# 1, 2, 9, 12, 14, 16, 20, 22, 24, 28, 30, 36, 38, 47, 49, 51, 55, 57, 64,
-# 66, 73, 77, 79, 91, 93, 104, 106, 109, 113, 115, 118, 121, 126, 128, 131,
-# 134, 140, 142, 150, 152, 156, 158, 166, 168, 172, 174, 183, 184, 189, 191,
-# 200, 207, 209, 218, 220, 224, 226, 234, 241
+# a(1) = 1, a(2) = 4, then
+#  for k>=0, -3*2^k <= j <= 3*2^k.

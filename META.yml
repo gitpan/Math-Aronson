@@ -1,6 +1,6 @@
 --- #YAML:1.0
 name:               Math-Aronson
-version:            3
+version:            4
 abstract:           Generate Aronson's sequence.
 author:
     - Kevin Ryde <user42@zip.com.au>

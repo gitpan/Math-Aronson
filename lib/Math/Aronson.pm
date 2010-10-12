@@ -25,7 +25,7 @@ use Carp;
 #use Smart::Comments;
 
 use vars '$VERSION';
-$VERSION = 3;
+$VERSION = 4;
 
 
 # maybe a hi=>$limit option to stop the ret or queue building up beyond a
@@ -47,11 +47,6 @@ BEGIN {
     };
   }
 }
-#       $_[0] =~ s{([^[:ascii:]])}
-#                 { my $c = $1;
-#                   my $nfd = Unicode::Normalize::normalize('D',$c);
-#                   ($nfd =~ /^([[:ascii:]])/ ? $1 : $c)
-#                 }ge;
 
 my %default_letter = ('en' => 'T',
                       'fr' => 'E');
@@ -64,16 +59,17 @@ sub new {
   my @ret;
   my $self = bless { ret   => \@ret,
                      queue => [ ],
-                     lang  => 'en',
                      @_
                    }, $class;
+  $self->{'lying'} = !! $self->{'lying'};
 
   my $lang = delete $self->{'lang'};
-  if ($lang eq 'fr') {
-    %$self = (conjunctions_word => 'et',
-              %$self);
-  } elsif ($lang eq 'en') {
+  if (! defined $lang) { $lang = 'en'; }  # default
+  if ($lang eq 'en') {
     %$self = (conjunctions_word => 'and',
+              %$self);
+  } elsif ($lang eq 'fr') {
+    %$self = (conjunctions_word => 'et',
               %$self);
   }
 
@@ -141,12 +137,11 @@ sub new {
   }
   $self->{'letter'} = $letter = lc($letter);
 
-  my $upto = 1;
-  my $pos = 0;
-  while (($pos = index($str,$letter,$pos)) >= 0) {
-    push @ret, $pos++ + $upto;
-  }
-  $self->{'upto'} = $upto + length($str);
+  # my $upto = 1;
+  push @ret,
+    grep {(substr($str,$_-1,1) eq $letter) ^ $self->{'lying'}}
+      1 .. (1 + length($str)-1);
+  $self->{'upto'} = 1 + length($str);
   ### initial: $self
   return $self;
 }
@@ -185,10 +180,10 @@ sub next {
 
     my $upto = $self->{'upto'};
     my $letter = $self->{'letter'};
-    my $pos = 0;
-    while (($pos = index($str,$letter,$pos)) >= 0) {
-      push @$ret, $pos++ + $upto;
-    }
+    push @$ret, 
+      grep {(substr($str,$_-$upto,1) eq $letter) ^ $self->{'lying'}}
+        $upto .. ($upto + length($str)-1);
+
     $self->{'upto'} += length($str);
     ### now upto: $self->{'upto'}
     ### ret: $ret
@@ -224,29 +219,13 @@ words.
     1    4      11     16        24     29  33  <-- sequence
 
 In the initial string "T is the", the letter T is the first and fourth
-letters, so those words are appended to make "T is the first, fourth".  In
-those words there are further Ts at 11 and 16, so those numbers are
-appended, and so on.
+letters, so those words are appended to make "T is the first, fourth".
+Those words have further Ts at 11 and 16, so those numbers are appended, and
+so on.
 
 Spaces and punctuation are ignored.  Accents like acutes are stripped for
 letter matching.  The C<without_conjunctions> option can ignore "and" or
 "et" too.
-
-=head2 Sloane's OEIS
-
-Sloane's On-Line Encyclopedia of Integer Sequences has Aronson's original
-sequence in English, plus a French form.
-
-    http://www.research.att.com/~njas/sequences/A005224
-    http://www.research.att.com/~njas/sequences/A080520
-
-The English A005224 is without conjunctions, so is generated with
-
-    $it = Math::Aronson->new (without_conjunctions => 1);
-
-But the French A080520 is with them, so just
-
-    $it = Math::Aronson->new (lang => 'fr');
 
 =head2 Termination
 
@@ -256,11 +235,39 @@ fall on enough of them.  (Is that proven?)
 
 But for example using letter "F" instead gives a finite sequence,
 
-    $it = Math::Aronson->new (letter => 'F');
+    $it = Math::Aronson->new (letter => 'F');  # 1, 7 only
 
-This is 1, 7, 12 per "F is the first, seventh" but ends there as there's no
+This is "F is the first, seventh" giving 1, 7 but ends there as there's no
 more "F"s in "seventh".  See F<examples/terminate.pl> in the sources to run
 thorough which letters seem to terminate or not.
+
+=head2 Sloane's OEIS
+
+Sloane's On-Line Encyclopedia of Integer Sequences has entries for Aronson's
+sequence and some variations
+
+    http://www.research.att.com/~njas/sequences/A005224
+
+    A005224    without_conjunctions=>1
+    A055508    letter=>'H', without_conjunctions=>1
+    A049525    letter=>'I', without_conjunctions=>1
+    A081023    lying=>1
+    A072886    lying=>1, initial_string=>"S ain't the"
+    A080520    lang=>'fr'
+
+    A072887    complement of lying A081023
+    A081024    complement of lying "S ain't" A072886
+    A072421    Latin P
+    A072422    Latin N
+    A072423    Latin T
+
+The English sequences are without conjunctions, hence for example
+
+    # sequence A005224
+    $it = Math::Aronson->new (without_conjunctions => 1);
+
+The "lying" versions A081023 and A072886 are presumably be the same, but the
+sample values don't go far enough to make a difference.
 
 =head1 FUNCTIONS
 
@@ -349,6 +356,19 @@ There's nothing to select a gender from C<Lingua::Any::Numbers>, as of
 version 0.30, so an C<ordinal_func> might be used for instance to get
 feminine forms from C<Lingua::ES::Numbers>.
 
+=item C<< lying => $bool >> (default false)
+
+A "lying" version of the sequence, where the positions described and
+returned are those without the target letter.  So for example
+
+    T is   the   second,         third, fifth, ...
+      ^^    ^^   ^^^^^^           ^
+      2,3,  5,6  7,8,9,10,11,12, 14, ...      <-- sequence
+
+Starting from "T is the", the first position is a T so "first" is not
+appended, but the second position is not a T so lie by giving "second", and
+similarly the third position, but the fourth is a T so it doesn't appear.
+
 =back
 
 =back
@@ -372,17 +392,17 @@ loop can be simply
 
 =back
 
-=head1 OTHER NOTES
+=head1 IMPLEMENTATION NOTES
 
-Accents are stripped for letter matches using C<Unicode::Normalize> if
-available, which means Perl 5.8.0 and higher, or a built-in Latin-1 table as
-a fallback otherwise.  That Latin-1 suits C<Lingua::FR::Numbers> and should
-suit most of the European numbers modules.
+Accents are stripped for letter matching with C<Unicode::Normalize> if
+available (Perl 5.8.0 and up), or a built-in Latin-1 table as a fallback
+otherwise.  That Latin-1 suits C<Lingua::FR::Numbers> and hopefully most of
+the European numbers modules.
 
-The use of the Lingua modules and string crunching means C<next> probably
-isn't blindingly fast.  It'd be possible to go numbers-only with the rules
-for ordinal words but generating just the positions of the "T"s or whatever
-desired letter, but that doesn't seem worth the effort.
+The use of the Lingua modules and string processing means C<next> probably
+isn't particularly fast.  It'd be possible to go numbers-only using the
+rules for ordinals as words but generating just the positions of the "T"s or
+whatever desired letter, but that doesn't seem worth the effort.
 
 =head1 SEE ALSO
 

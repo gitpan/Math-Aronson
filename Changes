@@ -17,6 +17,10 @@ You can get a copy of the GNU General Public License online at
 
 
 
+Version 4, October 2010
+    - new lying option
+    - allow lang=>undef as default English
+
 Version 3, September 2010
     - test manifest only as an author test
 
