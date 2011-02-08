@@ -1,43 +1,62 @@
 #!/usr/bin/perl -w
 
-# Copyright 2009, 2010 Kevin Ryde
+# Copyright 2009, 2010, 2011 Kevin Ryde
 
-# This file is part of Time-Duration-Locale.
+# This file is part of Math-Aronson.
 #
-# Time-Duration-Locale is free software; you can redistribute it and/or
-# modify it under the terms of the GNU General Public License as published
-# by the Free Software Foundation; either version 3, or (at your option) any
-# later version.
+# Math-Aronson is free software; you can redistribute it and/or modify it
+# under the terms of the GNU General Public License as published by the Free
+# Software Foundation; either version 3, or (at your option) any later
+# version.
 #
-# Time-Duration-Locale is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General
-# Public License for more details.
+# Math-Aronson is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+# or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
+# for more details.
 #
 # You should have received a copy of the GNU General Public License along
-# with Time-Duration-Locale.  If not, see <http://www.gnu.org/licenses/>.
+# with Math-Aronson.  If not, see <http://www.gnu.org/licenses/>.
 
+use 5.004;
 use strict;
-use warnings;
 use Math::Aronson;
-use Test::More;
+use Test;
+BEGIN {
+  plan tests => 2;
+}
 
 # uncomment this to run the ### lines
 #use Smart::Comments;
-
-use Config;
-$Config{useithreads}
-  or plan skip_all => 'No ithreads in this Perl';
-
-eval { require threads } # new in perl 5.8, maybe
-  or plan skip_all => "threads.pm not available: $@";
-
-plan tests => 2;
 
 use lib 't';
 use MyTestHelpers;
 BEGIN { MyTestHelpers::nowarnings() }
 
+my $have_threads;
+use Config;
+if (! $Config{useithreads}) {
+  MyTestHelpers::diag ('Config no useithreads in this Perl');
+} else {
+  $have_threads = eval { require threads; 1 }; # new in perl 5.8, maybe
+  if (! $have_threads) {
+    MyTestHelpers::diag ("threads.pm not available -- $@");
+  }
+}
+my $skip = ($have_threads
+            ? undef
+            : "due to threads.pm not available");
+
+sub numeq_array {
+  my ($a1, $a2) = @_;
+  while (@$a1 && @$a2) {
+    if ($a1->[0] ne $a2->[0]) {
+      return 0;
+    }
+    shift @$a1;
+    shift @$a2;
+  }
+  return (@$a1 == @$a2);
+}
 
 # This is only meant to check that any CLONE() done by threads works with
 # the fields in the iterator object.  Being all-perl it's going to be fine.
@@ -45,17 +64,29 @@ BEGIN { MyTestHelpers::nowarnings() }
 my $it = Math::Aronson->new;
 $it->next;
 
-my $thr = threads->create(\&foo);
 sub foo {
   return [ $it->next, $it->next, $it->next, $it->next ];
 }
+my $thread_got = [];
+if ($have_threads) {
+  my $threads_class = 'threads';
+  my $thr = $have_threads && $threads_class->create(\&foo);
+  $thread_got = $thr->join;
+}
+### $thread_got
 
-my $thread_aref = $thr->join;
-### $thread_aref
-is_deeply ($thread_aref, [4, 11, 16, 24], 'same in thread as main');
+my $want = [4, 11, 16, 24];
+skip ($skip,
+      numeq_array ($thread_got, $want),
+      1,
+      'same in thread as main');
 
-my @main = ($it->next, $it->next, $it->next, $it->next);
-### @main
-is_deeply (\@main, [4, 11, 16, 24], "thread doesn't upset main");
+my @main_got = ($it->next, $it->next, $it->next, $it->next);
+### @main_got
+skip ($skip,
+      numeq_array (\@main_got,
+                   [4, 11, 16, 24]),
+      1,
+      "thread doesn't upset main");
 
 exit 0;

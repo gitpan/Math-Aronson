@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-# Copyright 2010 Kevin Ryde
+# Copyright 2010, 2011 Kevin Ryde
 
 # This file is part of Math-Aronson.
 #
@@ -19,7 +19,6 @@
 
 use 5.004;
 use strict;
-use warnings;
 use ExtUtils::MakeMaker;
 use lib 'inc';
 use MyMakeMakerExtras;
@@ -32,36 +31,36 @@ MyMakeMakerExtras::WriteMakefile
    LICENSE      => 'gpl',
    SIGN         => 1,
    PREREQ_PM    => {
-                    'warnings' => 0,
                     'Lingua::EN::Numbers'  => '1.01', # incompatible rewrite
                     'Lingua::FR::Numbers'  => '0.04', # incompatible rewrite
-                    'Lingua::Any::Numbers' => '0.21', # maybe changed funcs?
-                    'Test::More' => 0,
                    },
    MIN_PERL_VERSION => '5.004',
 
-   META_MERGE
-   => { recommends
-        => { 'Unicode::Normalize' => 0 },
-        resources
-        => { homepage => 'http://user42.tuxfamily.org/math-aronson/index.html',
-           },
-        optional_features
-        => { maximum_tests
-             => { description => 'Have "make test" do as much as possible.',
-                  requires => { 'Test::Weaken'           => 3,
-                              },
-                },
-             maximum_devel
-             => { description => 'Stuff used variously for development.',
-                  requires => { 'Smart::Comments'     => 0,
-                                'Lingua::ES::Numeros' => 0,
-                                'Unicode::CharName'   => 0,
-                                'Unicode::Normalize'  => 0,
-                                'PerlIO::locale'      => '0.06', # 5.10 fix
+   META_MERGE =>
+   { resources =>
+     { homepage => 'http://user42.tuxfamily.org/math-aronson/index.html',
+     },
 
-                              }
-                },
-           },
-      },
+     recommends => {
+                    'Lingua::Any::Numbers' => '0.21', # maybe changed funcs?
+                    'Unicode::Normalize' => 0,
+                   },
+
+     optional_features =>
+     { maximum_tests =>
+       { description => 'Have "make test" do as much as possible.',
+         requires => { 'Test::Weaken'           => 3,
+                     },
+       },
+       maximum_devel =>
+       { description => 'Stuff used variously for development.',
+         requires => { 'Smart::Comments'     => 0,
+                       'Lingua::ES::Numeros' => 0,
+                       'Unicode::CharName'   => 0,
+                       'Unicode::Normalize'  => 0,
+                       'PerlIO::locale'      => '0.06', # 5.10 fix
+                     },
+       },
+     },
+   },
   );

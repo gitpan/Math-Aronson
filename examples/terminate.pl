@@ -1,6 +1,6 @@
 #!/usr/bin/perl -w
 
-# Copyright 2010 Kevin Ryde
+# Copyright 2010, 2011 Kevin Ryde
 
 # This file is part of Math-Aronson.
 #
@@ -26,8 +26,8 @@
 # continue past the first (or corresponding "est la premiere" for French).
 #
 
+use 5.004;
 use strict;
-use warnings;
 use Math::Aronson;
 
 foreach my $lang ('en', 'fr') {

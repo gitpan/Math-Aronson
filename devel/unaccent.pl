@@ -1,6 +1,6 @@
 #!/usr/bin/perl -w
 
-# Copyright 2010 Kevin Ryde
+# Copyright 2010, 2011 Kevin Ryde
 
 # This file is part of Math-Aronson.
 #
@@ -30,6 +30,28 @@ use Smart::Comments;
   binmode(\*STDOUT, ':locale') or die;
 }
 
+{
+  my $from = '';
+  my $to = '';
+  foreach my $i (0x80 .. 0xFF) {
+    my $str = chr($i);
+    $str = Encode::decode ('latin-1', $str);
+
+    # perl 5.10 thinks all non-ascii is alpha, or some such
+    next unless $str =~ /[[:alpha:]]/;
+
+    my $nfd = normalize('D',$str);
+    ### $str
+    ### $nfd
+
+    if ($nfd =~ /^([[:ascii:]])/) {
+      $from .= sprintf '\\%03o', $i;
+      $to   .= $1;
+    }
+  }
+  print "tr/$from/$to/\n";
+  exit 0;
+}
 
 {
   require Unicode::CharName;
@@ -49,28 +71,4 @@ use Smart::Comments;
   exit 0;
 }
 
-
-
-{
-  my $from = '';
-  my $to = '';
-  foreach my $i (0x80 .. 0xFF) {
-    my $str = chr($i);
-    $str = Encode::decode ('latin-1', $str);
-
-    # perl 5.10 thinks all non-ascii is alpha, or some such
-    next unless $str =~ /[[:alpha:]]/;
-
-    my $nfd = normalize('D',$str);
-    ### $str
-    ### $nfd
-
-    if ($nfd =~ /^([[:ascii:]])/) {
-      $from .= sprintf '\\x{%02X}', $i;
-      $to   .= $1;
-    }
-  }
-  print "tr/$from/$to/\n";
-  exit 0;
-}
 

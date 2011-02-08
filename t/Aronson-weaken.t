@@ -1,6 +1,6 @@
 #!/usr/bin/perl -w
 
-# Copyright 2010 Kevin Ryde
+# Copyright 2010, 2011 Kevin Ryde
 
 # This file is part of Math-Aronson.
 #
@@ -19,8 +19,10 @@
 
 use 5.004;
 use strict;
-use warnings;
-use Test::More;
+use Test;
+BEGIN {
+  plan tests => 5;
+}
 
 use lib 't';
 use MyTestHelpers;
@@ -30,9 +32,13 @@ MyTestHelpers::nowarnings();
 require Math::Aronson;
 
 # version 2.002 for "ignore"
-eval "use Test::Weaken 2.002; 1"
-  or plan skip_all => "due to Test::Weaken 2.002 not available -- $@";
-plan tests => 5;
+my $have_test_weaken = eval "use Test::Weaken 2.002; 1" || 0;
+if (! $have_test_weaken) {
+  MyTestHelpers::diag ("Test::Weaken 2.002 not available -- $@");
+}
+my $skip = ($have_test_weaken
+            ? undef
+            : "due to Test::Weaken 2.002 not available");
 
 sub my_ordinal {
   return 'foo';
@@ -44,22 +50,25 @@ foreach my $options ([],
                      [ lang => 'fr', conjunctions => 0 ],
                      [ ordinal_func => \&my_ordinal ],
                     ) {
-  my $leaks = Test::Weaken::leaks
+  my $leaks = $have_test_weaken && Test::Weaken::leaks
     ({ constructor => sub {
          return Math::Aronson->new (@$options);
        },
        ignore => \&Test::Weaken::ExtraBits::ignore_global_function,
      });
-  is ($leaks, undef, 'Test::Weaken deep garbage collection');
+  skip ($skip,
+        $leaks||0,
+        0,
+        'Test::Weaken deep garbage collection');
   if ($leaks) {
-    eval { diag "Test-Weaken ", explain $leaks }; # explain in Test::More 0.82
+    MyTestHelpers::dump($leaks);
 
     my $unfreed = $leaks->unfreed_proberefs;
     foreach my $proberef (@$unfreed) {
-      diag "  unfreed $proberef";
+      MyTestHelpers::diag ("  unfreed $proberef");
     }
     foreach my $proberef (@$unfreed) {
-      diag "  search $proberef";
+      MyTestHelpers::diag ("  search $proberef");
       MyTestHelpers::findrefs($proberef);
     }
   }

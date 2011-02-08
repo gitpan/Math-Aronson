@@ -1,6 +1,6 @@
 # Test::Weaken::ExtraBits -- some helpers for Test::Weaken
 
-# Copyright 2008, 2009, 2010 Kevin Ryde
+# Copyright 2008, 2009, 2010, 2011 Kevin Ryde
 
 # Test::Weaken::ExtraBits is shared by several distributions.
 #
@@ -19,19 +19,16 @@
 
 
 package Test::Weaken::ExtraBits;
-use 5.006;
 use strict;
-use warnings;
+use vars '@ISA', '@EXPORT_OK';
 
 use Exporter;
-our @ISA = ('Exporter');
-our @EXPORT_OK = qw(ignore_Class_Singleton
-                    ignore_DBI_dr
-                    ignore_global_function
-                    ignore_function
-                    ignore_module_functions
-                    findrefs);
-our %EXPORT_TAGS = (all => \@EXPORT_OK);
+@ISA = ('Exporter');
+@EXPORT_OK = qw(ignore_Class_Singleton
+                ignore_DBI_dr
+                ignore_global_function
+                ignore_function
+                ignore_module_functions);
 
 use constant DEBUG => 0;
 

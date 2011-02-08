@@ -1,6 +1,6 @@
 #!/usr/bin/perl -w
 
-# Copyright 2010 Kevin Ryde
+# Copyright 2010, 2011 Kevin Ryde
 
 # This file is part of Math-Aronson.
 #
@@ -17,13 +17,12 @@
 # You should have received a copy of the GNU General Public License along
 # with Math-Aronson.  If not, see <http://www.gnu.org/licenses/>.
 
-use 5.010;
 use strict;
 use warnings;
 use Lingua::Any::Numbers;
 
 { local $,=' ';
-  say Lingua::Any::Numbers::available();
+  print Lingua::Any::Numbers::available(),"\n";
 }
 
 foreach my $lang (Lingua::Any::Numbers::available()) {
@@ -36,7 +35,7 @@ foreach my $lang (Lingua::Any::Numbers::available()) {
       my $char = $1;
       my $ord = sprintf "%#X", ord($char);
       my $wide = (utf8::is_utf8($str) ? "wide " : "bytes");
-      say "$lang $n $wide $ord   $str";
+      print "$lang $n $wide $ord   $str\n";
       last;
     }
   }

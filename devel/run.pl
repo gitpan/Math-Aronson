@@ -1,6 +1,6 @@
 #!/usr/bin/perl -w
 
-# Copyright 2010 Kevin Ryde
+# Copyright 2010, 2011 Kevin Ryde
 
 # This file is part of Math-Aronson.
 #
@@ -17,20 +17,22 @@
 # You should have received a copy of the GNU General Public License along
 # with Math-Aronson.  If not, see <http://www.gnu.org/licenses/>.
 
-use 5.010;
 use strict;
-use warnings;
 use Math::Aronson;
 
 {
-  my $aronson = Math::Aronson->new (lang => 'en',
-                                    letter => 'F',
+  my $aronson = Math::Aronson->new (lang => 'fr',
+                                    # letter => 'F',
                                     # initial_string => "I think T is",
                                     # lying => 1,
                                    );
   ### $aronson
   foreach (1 .. 50) {
-    say $aronson->next//last;
+    my $n = $aronson->next;
+    print "", (defined $n ? $n : 'undef'), "\n";
+    if (! defined $n) {
+      last;
+    }
   }
   exit 0;
 }

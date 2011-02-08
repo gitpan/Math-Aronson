@@ -1,6 +1,6 @@
 --- #YAML:1.0
 name:               Math-Aronson
-version:            4
+version:            5
 abstract:           Generate Aronson's sequence.
 author:
     - Kevin Ryde <user42@zip.com.au>
@@ -11,12 +11,9 @@ configure_requires:
 build_requires:
     ExtUtils::MakeMaker:  0
 requires:
-    Lingua::Any::Numbers:  0.21
     Lingua::EN::Numbers:  1.01
     Lingua::FR::Numbers:  0.04
     perl:                 5.004
-    Test::More:           0
-    warnings:             0
 resources:
     homepage:  http://user42.tuxfamily.org/math-aronson/index.html
     license:   http://www.gnu.org/licenses/gpl.html
@@ -55,4 +52,5 @@ optional_features:
             YAML::Tiny:          0
             YAML::XS:            0
 recommends:
-    Unicode::Normalize:  0
+    Lingua::Any::Numbers:  0.21
+    Unicode::Normalize:   0

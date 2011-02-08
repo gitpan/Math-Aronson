@@ -15,41 +15,42 @@ not run its Makefile.PL or Build.PL.
 Hash: SHA1
 
 SHA1 842745cb706f8f2126506f544492f7a80dbe29b3 COPYING
-SHA1 80a8bf9d7a2957bc25808e5ae5caed31d416fa95 Changes
-SHA1 bf6529f04671f0de2ef45eac8273a1a4d964f92c MANIFEST
-SHA1 e6e7c2904ea5d300c0ddf70fc5a80f5005229aa9 MANIFEST.SKIP
-SHA1 16f6e12912ed8af7de4c5b0906cd56c131516c60 META.yml
-SHA1 dd01622d5f7867b95997d746511b55089956081c Makefile.PL
-SHA1 f9a847c7bc66fba1e3271e2e56604baa1679eb4c debian/changelog
+SHA1 9b50f47794309ea47d4215ad72b876e8139aa859 Changes
+SHA1 65dfb0603ae4145dc39fc66768092110ab023091 MANIFEST
+SHA1 6c771cc4b0718f7bc9c9af01889700d7bce0a8e6 MANIFEST.SKIP
+SHA1 2f7e1df4654320b0e3f5b27df2d976bf3ac44507 META.yml
+SHA1 1f33be7340333791e6061bbd927af71f89cfbcc1 Makefile.PL
+SHA1 f2ca9261907d60782cd0f65b1373e74ccd112b78 debian/changelog
 SHA1 ac3478d69a3c81fa62e60f5c3696165a4e5e6ac4 debian/compat
-SHA1 ba615bc4434696b654f142d749f51deece17890d debian/control
-SHA1 72ace0ce4498815cda4dc0fab7f5968e55023d4d debian/copyright
+SHA1 2ecd3ea36f2fbbe46a6880194361d15df42521d7 debian/control
+SHA1 ba2dd0ea88aae547f439c1b1d5011e5a482d9df7 debian/copyright
 SHA1 2dbc73a7cf261f7dc9c4b6e64c9aacc3cfc41307 debian/patches/pod-examples-dir.diff
 SHA1 260a610f68684b44c17a69faa0ca408fd9c8107a debian/rules
 SHA1 61652cd1568dcf2614df833eba241755eee34e89 debian/source/format
 SHA1 f27d0e82f3daff43b34aae35bdc7f836051fe246 debian/watch
+SHA1 9bf09533bee0a1cdc14b8478f0e84b94ae390872 devel/latin.pl
 SHA1 e7f543ff80e87dc2d588ebccd3ce3106afb23208 devel/misc.pl
-SHA1 93b4d08ebdff5b7aae51710ea718c9059b087d9f devel/non-ascii.pl
-SHA1 917c3d60623055d9bc5927137a6130f4a1252088 devel/run.pl
+SHA1 503e72b1b485487295a8b4467b74b8f3dfa7ac54 devel/non-ascii.pl
+SHA1 6cb6d3b8f688529db7aebac488adb26d596f8a8c devel/run.pl
 SHA1 49d75cb5e26480a6e73a758b4c9dfcb77eb6d47b devel/sloane-a.pl
-SHA1 63b02efef44c668dc364b5f27462dacfa1577814 devel/unaccent.pl
-SHA1 80918f0f327882d81d02a37110af84f8cad421d1 examples/terminate.pl
-SHA1 3cf3345a9177dbe362dfc8fbf192272f4a611ca8 inc/MyMakeMakerExtras.pm
-SHA1 feea9135e825bc39cdec5377a7d278e5dc6ab9c7 lib/Math/Aronson.pm
-SHA1 9450c0212c441b3994144cceba7cb7508629256f t/Aronson-ithreads.t
-SHA1 87ef6f4ed6db27dd3df0ebdef65737585bcb438e t/Aronson-weaken.t
-SHA1 c860946ce245f803646195e4ea0cfa1ee1e1b337 t/Aronson.t
-SHA1 5e5680b471811244fe93571efc23e7b6089cac3b t/MyTestHelpers.pm
-SHA1 06b321c36977d841dedc60d0e4afb7d59ce1bd6f t/Test/Weaken/ExtraBits.pm
-SHA1 9127f78a0dfa04976acbb979dd7862ef59a74c58 xt/0-META-read.t
-SHA1 37abd43b41068804ea4bb099fdd89af21be82926 xt/0-Test-DistManifest.t
-SHA1 8f93fb4c8f0424a4442cc93c9a2e86342ef55281 xt/0-Test-Pod.t
-SHA1 1de8f07883f6bf1a2ef79f2cb8adf1deb3f61cee xt/0-Test-Synopsis.t
-SHA1 fb517c2fae5ddac559318bf6a224949115ea3129 xt/0-Test-YAML-Meta.t
+SHA1 0d7e3f70f7d024df9bc6faefa2c097041424ac24 devel/unaccent.pl
+SHA1 8f20290885952c625d3f7ee482b5851d76158387 examples/terminate.pl
+SHA1 cf647ee28a7aaad9896d0063f8a2529919ccfcd3 inc/MyMakeMakerExtras.pm
+SHA1 8b22745fdcdc8161224149af5a5f5b1872051867 lib/Math/Aronson.pm
+SHA1 481b03dd9e03ce7fb73a551e76c776c4741301b3 t/Aronson-ithreads.t
+SHA1 03256cd480adba61d81c3c0e782ae60c70358db7 t/Aronson-weaken.t
+SHA1 a85234fefd2e116a78bb7ce5a35843bcc6927a6d t/Aronson.t
+SHA1 36b8eba56c87d62b1b41959187c717577dc16fa5 t/MyTestHelpers.pm
+SHA1 500b71053b808f6fd9c5ec4514beab566984fd3d t/Test/Weaken/ExtraBits.pm
+SHA1 0279c9310ec528d10a2a14e602bf98f1c776cce1 xt/0-META-read.t
+SHA1 8a5e0f34131de34e584fbb1939c191a152566155 xt/0-Test-DistManifest.t
+SHA1 cc04a5fe5d8b8b38bfd56453d5d2686c8ea58783 xt/0-Test-Pod.t
+SHA1 8cc52e23427a82cfef5802bf512b13c65de2687a xt/0-Test-Synopsis.t
+SHA1 4c14845872d6eb4280e12f862d6ba2c343358c60 xt/0-Test-YAML-Meta.t
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.10 (GNU/Linux)
 
-iD8DBQFMtOwnLFMCIV9q3ToRAi8PAJ4gtPceevs1VWuNxkNJ7xGg+D5YSQCfdz0Q
-YANM0HxDgpaKwYoh11lMGzI=
-=eWx7
+iD8DBQFNUI+aLFMCIV9q3ToRAhY8AJ41x0b+fjy+rfBo3WN4+jUCjzVcsQCfbDFc
+KXOctLVyYb3jdTw8TcqM9CY=
+=xZ6z
 -----END PGP SIGNATURE-----

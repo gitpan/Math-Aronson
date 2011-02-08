@@ -1,6 +1,6 @@
 #!/usr/bin/perl -w
 
-# Copyright 2010 Kevin Ryde
+# Copyright 2010, 2011 Kevin Ryde
 
 # This file is part of Math-Aronson.
 #
@@ -19,28 +19,47 @@
 
 use 5.004;
 use strict;
-use warnings;
-use Test::More tests => 20;
+use Test;
+BEGIN {
+  plan tests => 20;
+}
 
 use lib 't';
 use MyTestHelpers;
 MyTestHelpers::nowarnings();
 
-require Math::Aronson;
+use Math::Aronson;
+
+sub numeq_array {
+  my ($a1, $a2) = @_;
+  while (@$a1 && @$a2) {
+    unless ((! defined $a1->[0] && ! defined $a2->[0])
+            || (defined $a1->[0]
+                && defined $a2->[0]
+                && $a1->[0] == $a2->[0])) {
+      return 0;
+    }
+    shift @$a1;
+    shift @$a2;
+  }
+  return (@$a1 == @$a2);
+}
 
 
 #------------------------------------------------------------------------------
 # VERSION
 
 {
-  my $want_version = 4;
-  is ($Math::Aronson::VERSION, $want_version, 'VERSION variable');
-  is (Math::Aronson->VERSION,  $want_version, 'VERSION class method');
+  my $want_version = 5;
+  ok ($Math::Aronson::VERSION, $want_version, 'VERSION variable');
+  ok (Math::Aronson->VERSION,  $want_version, 'VERSION class method');
 
   ok (eval { Math::Aronson->VERSION($want_version); 1 },
+      1,
       "VERSION class check $want_version");
   my $check_version = $want_version + 1000;
   ok (! eval { Math::Aronson->VERSION($check_version); 1 },
+      1,
       "VERSION class check $check_version");
 }
 
@@ -181,7 +200,12 @@ foreach my $elem (
   my ($name, $options, $want) = @$elem;
   my $aronson = Math::Aronson->new (%$options);
   my @got = map {scalar($aronson->next)} 1 .. @$want;
-  is_deeply (\@got, $want, $name);
+  my $eq = numeq_array(\@got, $want);
+  ok ($eq, 1, $name);
+  if (! $eq) {
+    MyTestHelpers::dump(\@got);
+    MyTestHelpers::dump($want);
+  }
 }
 
 exit 0;
