@@ -1,5 +1,5 @@
 This file contains message digests of all files listed in MANIFEST,
-signed via the Module::Signature module, version 0.66.
+signed via the Module::Signature module, version 0.68.
 
 To verify the content in this distribution, first make sure you have
 Module::Signature installed, then type:
@@ -15,19 +15,21 @@ not run its Makefile.PL or Build.PL.
 Hash: SHA1
 
 SHA1 842745cb706f8f2126506f544492f7a80dbe29b3 COPYING
-SHA1 9b50f47794309ea47d4215ad72b876e8139aa859 Changes
-SHA1 65dfb0603ae4145dc39fc66768092110ab023091 MANIFEST
-SHA1 6c771cc4b0718f7bc9c9af01889700d7bce0a8e6 MANIFEST.SKIP
-SHA1 2f7e1df4654320b0e3f5b27df2d976bf3ac44507 META.yml
+SHA1 03adc8becf7722216c3facc824eee75f501462a9 Changes
+SHA1 2bc8789a0b172dcab9f0bf285800908aedbff79a MANIFEST
+SHA1 1d745ef4cc154d3b13bfee6d1048ac4135fc1aa7 MANIFEST.SKIP
+SHA1 ac38d3393c66e036f489bbca08a98a08698f3996 META.yml
 SHA1 1f33be7340333791e6061bbd927af71f89cfbcc1 Makefile.PL
-SHA1 f2ca9261907d60782cd0f65b1373e74ccd112b78 debian/changelog
+SHA1 052738117707ae43f1811fac7996fc395360bc0b debian/changelog
 SHA1 ac3478d69a3c81fa62e60f5c3696165a4e5e6ac4 debian/compat
-SHA1 2ecd3ea36f2fbbe46a6880194361d15df42521d7 debian/control
+SHA1 4c2228f9ac49956c2af2e0d6f47e98214673576d debian/control
 SHA1 ba2dd0ea88aae547f439c1b1d5011e5a482d9df7 debian/copyright
 SHA1 2dbc73a7cf261f7dc9c4b6e64c9aacc3cfc41307 debian/patches/pod-examples-dir.diff
 SHA1 260a610f68684b44c17a69faa0ca408fd9c8107a debian/rules
 SHA1 61652cd1568dcf2614df833eba241755eee34e89 debian/source/format
 SHA1 f27d0e82f3daff43b34aae35bdc7f836051fe246 debian/watch
+SHA1 7b1062dbfbe21f06629b1642e4ccd81c25660dbd devel/Iterator/Aronson.pm
+SHA1 d06c5e5e45441d166f504319a27653d63b625990 devel/Iterator/Simple/Aronson.pm
 SHA1 9bf09533bee0a1cdc14b8478f0e84b94ae390872 devel/latin.pl
 SHA1 e7f543ff80e87dc2d588ebccd3ce3106afb23208 devel/misc.pl
 SHA1 503e72b1b485487295a8b4467b74b8f3dfa7ac54 devel/non-ascii.pl
@@ -35,22 +37,30 @@ SHA1 6cb6d3b8f688529db7aebac488adb26d596f8a8c devel/run.pl
 SHA1 49d75cb5e26480a6e73a758b4c9dfcb77eb6d47b devel/sloane-a.pl
 SHA1 0d7e3f70f7d024df9bc6faefa2c097041424ac24 devel/unaccent.pl
 SHA1 8f20290885952c625d3f7ee482b5851d76158387 examples/terminate.pl
-SHA1 cf647ee28a7aaad9896d0063f8a2529919ccfcd3 inc/MyMakeMakerExtras.pm
-SHA1 8b22745fdcdc8161224149af5a5f5b1872051867 lib/Math/Aronson.pm
+SHA1 4b1a3d9217d81794abcbf621b24b200df07f7499 inc/MyMakeMakerExtras.pm
+SHA1 78777cef755a3896e260ef4c565338dcb0e479f6 inc/MyModuleUtils_without.pm
+SHA1 155ad01397c5630f53d76fce828937dbbef28cd5 lib/Math/Aronson.pm
+SHA1 7e38ec99fcb9b42c9d69928f015488c088bfe4b9 lib/Math/NumSeq/Aronson.pm
+SHA1 d85944e4f4a28f7e63c2a9f41e09b4cae735b1d7 lib/Math/NumSeq/OEIS/Catalogue/Plugin/Aronson.pm
+SHA1 ad2a7022afd00e63bb8c0e8018167bce5a0c2624 t/Aronson-NumSeq.t
 SHA1 481b03dd9e03ce7fb73a551e76c776c4741301b3 t/Aronson-ithreads.t
 SHA1 03256cd480adba61d81c3c0e782ae60c70358db7 t/Aronson-weaken.t
-SHA1 a85234fefd2e116a78bb7ce5a35843bcc6927a6d t/Aronson.t
-SHA1 36b8eba56c87d62b1b41959187c717577dc16fa5 t/MyTestHelpers.pm
-SHA1 500b71053b808f6fd9c5ec4514beab566984fd3d t/Test/Weaken/ExtraBits.pm
+SHA1 12d8e80c1c8d71089ff563aa3a8ad7736c849246 t/Aronson.t
+SHA1 016f6f5865d54130d50f400fb630091bd1a6c76f t/MyTestHelpers.pm
+SHA1 1a0dee3ed339f3c1d681f29e7c32e8e218159b4d t/Test/Weaken/ExtraBits.pm
 SHA1 0279c9310ec528d10a2a14e602bf98f1c776cce1 xt/0-META-read.t
+SHA1 219395eb91b03829e6f14db4ebd57d88ea972e61 xt/0-Test-ConsistentVersion.t
 SHA1 8a5e0f34131de34e584fbb1939c191a152566155 xt/0-Test-DistManifest.t
 SHA1 cc04a5fe5d8b8b38bfd56453d5d2686c8ea58783 xt/0-Test-Pod.t
 SHA1 8cc52e23427a82cfef5802bf512b13c65de2687a xt/0-Test-Synopsis.t
-SHA1 4c14845872d6eb4280e12f862d6ba2c343358c60 xt/0-Test-YAML-Meta.t
+SHA1 194f76a77d4b022a8b707932d3a45be310400360 xt/0-Test-YAML-Meta.t
+SHA1 bdc59bfb29089f4c801a4282c0c3498f9a7982e5 xt/0-examples-xrefs.t
+SHA1 c03e001ac27b9cb5954174852eb3087d758334d2 xt/0-file-is-part-of.t
+SHA1 daba2840c7f128371d42516619a0e04fee2f5ff4 xt/0-no-debug-left-on.t
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
+Version: GnuPG v1.4.11 (GNU/Linux)
 
-iD8DBQFNUI+aLFMCIV9q3ToRAhY8AJ41x0b+fjy+rfBo3WN4+jUCjzVcsQCfbDFc
-KXOctLVyYb3jdTw8TcqM9CY=
-=xZ6z
+iD8DBQFORcPDLFMCIV9q3ToRAl3pAJ4vaADpuhgGJm+U03yFuGDtsfMnNwCfSg/L
+MmGjjP2gXGolFtguL5UiI6k=
+=hYaL
 -----END PGP SIGNATURE-----

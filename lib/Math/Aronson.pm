@@ -21,10 +21,10 @@ use strict;
 use Carp;
 
 # uncomment this to run the ### lines
-#use Smart::Comments;
+#use Devel::Comments;
 
 use vars '$VERSION';
-$VERSION = 5;
+$VERSION = 6;
 
 # maybe a hi=>$limit option to stop the ret or queue building up beyond a
 # desired point
@@ -61,8 +61,7 @@ sub new {
                    }, $class;
   $self->{'lying'} = !! $self->{'lying'};
 
-  my $lang = delete $self->{'lang'};
-  if (! defined $lang) { $lang = 'en'; }  # default
+  my $lang = ($self->{'lang'} ||= 'en');  # default
   if ($lang eq 'en') {
     %$self = (conjunctions_word => 'and',
               %$self);

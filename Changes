@@ -17,6 +17,10 @@ You can get a copy of the GNU General Public License online at
 
 
 
+
+Version 6, August 2011
+    - Math::NumSeq tie-in
+
 Version 5, February 2011
     - fixes for perl 5.6 and earlier
 
