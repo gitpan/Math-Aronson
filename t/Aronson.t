@@ -50,7 +50,7 @@ sub numeq_array {
 # VERSION
 
 {
-  my $want_version = 6;
+  my $want_version = 7;
   ok ($Math::Aronson::VERSION, $want_version, 'VERSION variable');
   ok (Math::Aronson->VERSION,  $want_version, 'VERSION class method');
 
@@ -66,7 +66,7 @@ sub numeq_array {
 #------------------------------------------------------------------------------
 
 foreach my $elem (
-                  [ "default en",
+                  [ "default en (with conjunctions)",
                     { },
                     [ 1, 4, 11, 16, 24, 29, 33 ] ],
 

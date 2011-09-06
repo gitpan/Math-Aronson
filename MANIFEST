@@ -41,4 +41,6 @@ xt/0-Test-DistManifest.t
 xt/0-Test-Pod.t
 xt/0-Test-Synopsis.t
 xt/0-Test-YAML-Meta.t
+xt/Aronson-NumSeq-oeis.t
+xt/MyOEIS.pm
 META.yml                                 Module meta-data (added by MakeMaker)

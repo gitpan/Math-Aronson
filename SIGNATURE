@@ -15,12 +15,12 @@ not run its Makefile.PL or Build.PL.
 Hash: SHA1
 
 SHA1 842745cb706f8f2126506f544492f7a80dbe29b3 COPYING
-SHA1 03adc8becf7722216c3facc824eee75f501462a9 Changes
-SHA1 2bc8789a0b172dcab9f0bf285800908aedbff79a MANIFEST
+SHA1 c3d3823eb108a5a6803a97fee7ced2581ccc68f7 Changes
+SHA1 a33bd9db8d65b522150ea1bf22dcbf2d4ff81acf MANIFEST
 SHA1 1d745ef4cc154d3b13bfee6d1048ac4135fc1aa7 MANIFEST.SKIP
-SHA1 ac38d3393c66e036f489bbca08a98a08698f3996 META.yml
+SHA1 8eebbc192e430b3fae3ff51b79402e663f93bac2 META.yml
 SHA1 1f33be7340333791e6061bbd927af71f89cfbcc1 Makefile.PL
-SHA1 052738117707ae43f1811fac7996fc395360bc0b debian/changelog
+SHA1 6b5dcfb2d5a820700fcecc034fa405e748886d92 debian/changelog
 SHA1 ac3478d69a3c81fa62e60f5c3696165a4e5e6ac4 debian/compat
 SHA1 4c2228f9ac49956c2af2e0d6f47e98214673576d debian/control
 SHA1 ba2dd0ea88aae547f439c1b1d5011e5a482d9df7 debian/copyright
@@ -37,15 +37,15 @@ SHA1 6cb6d3b8f688529db7aebac488adb26d596f8a8c devel/run.pl
 SHA1 49d75cb5e26480a6e73a758b4c9dfcb77eb6d47b devel/sloane-a.pl
 SHA1 0d7e3f70f7d024df9bc6faefa2c097041424ac24 devel/unaccent.pl
 SHA1 8f20290885952c625d3f7ee482b5851d76158387 examples/terminate.pl
-SHA1 4b1a3d9217d81794abcbf621b24b200df07f7499 inc/MyMakeMakerExtras.pm
+SHA1 e49e071a43390ddb233272dbf39fbaf2947b1cd6 inc/MyMakeMakerExtras.pm
 SHA1 78777cef755a3896e260ef4c565338dcb0e479f6 inc/MyModuleUtils_without.pm
-SHA1 155ad01397c5630f53d76fce828937dbbef28cd5 lib/Math/Aronson.pm
-SHA1 7e38ec99fcb9b42c9d69928f015488c088bfe4b9 lib/Math/NumSeq/Aronson.pm
-SHA1 d85944e4f4a28f7e63c2a9f41e09b4cae735b1d7 lib/Math/NumSeq/OEIS/Catalogue/Plugin/Aronson.pm
-SHA1 ad2a7022afd00e63bb8c0e8018167bce5a0c2624 t/Aronson-NumSeq.t
+SHA1 0936af119a5f45adc9b0c55010124b4f25db43dd lib/Math/Aronson.pm
+SHA1 f59cf5917b8e3582444dd9590a84216fb97a59b5 lib/Math/NumSeq/Aronson.pm
+SHA1 bed421384b5c5a9d0a581f9a41c6098734f2d496 lib/Math/NumSeq/OEIS/Catalogue/Plugin/Aronson.pm
+SHA1 651529a493a37a9f8114a01f6cad95225ed1e587 t/Aronson-NumSeq.t
 SHA1 481b03dd9e03ce7fb73a551e76c776c4741301b3 t/Aronson-ithreads.t
 SHA1 03256cd480adba61d81c3c0e782ae60c70358db7 t/Aronson-weaken.t
-SHA1 12d8e80c1c8d71089ff563aa3a8ad7736c849246 t/Aronson.t
+SHA1 fd22ff052721769d197ff30a4f7522a5b43835ce t/Aronson.t
 SHA1 016f6f5865d54130d50f400fb630091bd1a6c76f t/MyTestHelpers.pm
 SHA1 1a0dee3ed339f3c1d681f29e7c32e8e218159b4d t/Test/Weaken/ExtraBits.pm
 SHA1 0279c9310ec528d10a2a14e602bf98f1c776cce1 xt/0-META-read.t
@@ -57,10 +57,12 @@ SHA1 194f76a77d4b022a8b707932d3a45be310400360 xt/0-Test-YAML-Meta.t
 SHA1 bdc59bfb29089f4c801a4282c0c3498f9a7982e5 xt/0-examples-xrefs.t
 SHA1 c03e001ac27b9cb5954174852eb3087d758334d2 xt/0-file-is-part-of.t
 SHA1 daba2840c7f128371d42516619a0e04fee2f5ff4 xt/0-no-debug-left-on.t
+SHA1 c05c244378910476c4adf04740c2978f49b5b2a6 xt/Aronson-NumSeq-oeis.t
+SHA1 bef5f63441bafef8bfe95d32b0c2b9f69db4a456 xt/MyOEIS.pm
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.11 (GNU/Linux)
 
-iD8DBQFORcPDLFMCIV9q3ToRAl3pAJ4vaADpuhgGJm+U03yFuGDtsfMnNwCfSg/L
-MmGjjP2gXGolFtguL5UiI6k=
-=hYaL
+iD8DBQFOZqCQLFMCIV9q3ToRAveLAKCHjcl0kVmcU52zl9TbZDCXX9IyoACcDlhK
+WKIB0hlUkvwzbyY7Ug7zILs=
+=3kc2
 -----END PGP SIGNATURE-----

@@ -24,7 +24,7 @@ use Carp;
 #use Devel::Comments;
 
 use vars '$VERSION';
-$VERSION = 6;
+$VERSION = 7;
 
 # maybe a hi=>$limit option to stop the ret or queue building up beyond a
 # desired point
@@ -59,6 +59,8 @@ sub new {
                      queue => [ ],
                      @_
                    }, $class;
+
+  # 1 or '' for use with xor
   $self->{'lying'} = !! $self->{'lying'};
 
   my $lang = ($self->{'lang'} ||= 'en');  # default
@@ -69,6 +71,17 @@ sub new {
     %$self = (conjunctions_word => 'et',
               %$self);
   }
+  # for oeis_anum()
+  $self->{'lang'} = ($self->{'ordinal_func'} ? 'func' : lc($lang));
+
+  my $without_conjunctions = delete $self->{'without_conjunctions'};
+  my $conjunctions_word    = delete $self->{'conjunctions_word'};
+
+  $self->{'conjunctions'}
+    = (($lang eq 'en' && $conjunctions_word ne 'and')
+       && ($lang eq 'fr' && $conjunctions_word ne 'et')
+       ? 'x'
+       : ($without_conjunctions ? 0 : 1));
 
   $self->{'ordinal_func'} ||=
     ($lang eq 'en' ? do {
@@ -87,8 +100,6 @@ sub new {
        }
      });
 
-  my $without_conjunctions = delete $self->{'without_conjunctions'};
-  my $conjunctions_word    = delete $self->{'conjunctions_word'};
   my $without_conjunctions_func
     = $self->{'without_conjunctions_func'}
       = ($without_conjunctions && defined $conjunctions_word
@@ -98,47 +109,47 @@ sub new {
          }
          : \&_conjunctions_noop);  # no change to strings
 
-  my $str = delete $self->{'initial_string'};
+  my $initial_string = delete $self->{'initial_string'};
   my $letter = $self->{'letter'};
 
-  if (! defined $str) {
+  if (! defined $initial_string) {
     if (! $letter) {
       # default 'T' for en or 'E' for fr
       $letter = $default_letter{$lang};
     }
-    if (! defined ($str = $default_initial_string{$lang})) {
+    if (! defined ($initial_string = $default_initial_string{$lang})) {
       croak 'No default initial_string for language \'',$lang,'\'';
     }
-    $str = $letter . $str;
+    $initial_string = $letter . $initial_string;
   }
 
-  &$unaccent ($str);
-  $str = lc ($str);
+  &$unaccent ($initial_string);
+  $initial_string = lc ($initial_string);
 
-  &$without_conjunctions_func ($str);
-  $str =~ s/(\W|_)+//g;  # strip non alphas
-  ### initial: $str
+  &$without_conjunctions_func ($initial_string);
+  $initial_string =~ s/(\W|_)+//g;  # strip non alphas
+  ### initial: $initial_string
 
   if (! defined $letter) {
-    if (defined $str) {
+    if (defined $initial_string) {
       # initial_string but no letter, take letter as first alphabetical
-      $letter = substr($str,0,1);
+      $letter = substr($initial_string,0,1);
     } else {
     }
   }
 
   unless (length($letter)) {
-    # empty string no good as will match endlessly, change to a space which
-    # will never match
+    # empty letter string no good as will match endlessly, change to a space
+    # which will never match
     $letter = ' ';
   }
   $self->{'letter'} = $letter = lc($letter);
 
   # my $upto = 1;
   push @ret,
-    grep {(substr($str,$_-1,1) eq $letter) ^ $self->{'lying'}}
-      1 .. (1 + length($str)-1);
-  $self->{'upto'} = 1 + length($str);
+    grep {(substr($initial_string,$_-1,1) eq $letter) ^ $self->{'lying'}}
+      1 .. (1 + length($initial_string)-1);
+  $self->{'upto'} = 1 + length($initial_string);
   ### initial: $self
   return $self;
 }
@@ -249,12 +260,13 @@ sequence and some variations
     A005224    without_conjunctions=>1
     A055508    letter=>'H', without_conjunctions=>1
     A049525    letter=>'I', without_conjunctions=>1
-    A081023    lying=>1
+    A081023    lying=>1,    without_conjunctions=>1
     A072886    lying=>1, initial_string=>"S ain't the"
+
     A080520    lang=>'fr'
 
-    A072887    complement of lying A081023
-    A081024    complement of lying "S ain't" A072886
+    A081024    complement of lying A081023
+    A072887    complement of lying "S ain't" A072886
     A072421    Latin P
     A072422    Latin N
     A072423    Latin T
