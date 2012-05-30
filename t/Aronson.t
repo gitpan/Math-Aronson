@@ -50,7 +50,7 @@ sub numeq_array {
 # VERSION
 
 {
-  my $want_version = 7;
+  my $want_version = 8;
   ok ($Math::Aronson::VERSION, $want_version, 'VERSION variable');
   ok (Math::Aronson->VERSION,  $want_version, 'VERSION class method');
 

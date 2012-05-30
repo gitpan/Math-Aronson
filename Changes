@@ -1,4 +1,4 @@
-Copyright 2010, 2011 Kevin Ryde
+Copyright 2010, 2011, 2012 Kevin Ryde
 
 This file is part of Math-Aronson.
 
@@ -17,6 +17,9 @@ You can get a copy of the GNU General Public License online at
 
 
 
+
+Version 8, May 2012
+    - NumSeq fix i_start and value=undef
 
 Version 7, September 2011
     - some NumSeq oeis_anum() bits

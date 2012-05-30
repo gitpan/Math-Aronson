@@ -1,6 +1,6 @@
-#!/usr/bin/perl
+#!/usr/bin/perl -w
 
-# Copyright 2010, 2011 Kevin Ryde
+# Copyright 2010, 2011, 2012 Kevin Ryde
 
 # This file is part of Math-Aronson.
 #
@@ -39,6 +39,7 @@ MyMakeMakerExtras::WriteMakefile
    META_MERGE =>
    { resources =>
      { homepage => 'http://user42.tuxfamily.org/math-aronson/index.html',
+       license  => 'http://www.gnu.org/licenses/gpl.html',
      },
 
      recommends => {
@@ -49,18 +50,20 @@ MyMakeMakerExtras::WriteMakefile
      optional_features =>
      { maximum_tests =>
        { description => 'Have "make test" do as much as possible.',
-         requires => { 'Test::Weaken'           => 3,
-                     },
-       },
-       maximum_devel =>
-       { description => 'Stuff used variously for development.',
-         requires => { 'Smart::Comments'     => 0,
-                       'Lingua::ES::Numeros' => 0,
-                       'Unicode::CharName'   => 0,
-                       'Unicode::Normalize'  => 0,
-                       'PerlIO::locale'      => '0.06', # 5.10 fix
+         requires => { 'Test::Weaken'            => '2.002',
+                       'Test::Weaken::ExtraBits' => 1,
                      },
        },
      },
    },
   );
+
+# maximum_devel =>
+# { description => 'Stuff used variously for development.',
+#   requires => { 'Smart::Comments'     => 0,
+#                 'Lingua::ES::Numeros' => 0,
+#                 'Unicode::CharName'   => 0,
+#                 'Unicode::Normalize'  => 0,
+#                 'PerlIO::locale'      => '0.06', # 5.10 fix
+#               },
+# },

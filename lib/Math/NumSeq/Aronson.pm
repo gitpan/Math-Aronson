@@ -1,4 +1,4 @@
-# Copyright 2010, 2011 Kevin Ryde
+# Copyright 2010, 2011, 2012 Kevin Ryde
 
 # This file is part of Math-Aronson.
 #
@@ -20,7 +20,7 @@ use 5.004;
 use strict;
 
 use vars '$VERSION', '@ISA';
-$VERSION = 7;
+$VERSION = 8;
 
 use Math::NumSeq;
 @ISA = ('Math::NumSeq');
@@ -29,15 +29,16 @@ use Math::NumSeq;
 # , '@CARP_NOT'
 # @CARP_NOT = ('Math::Aronson');
 
-
 # uncomment this to run the ### lines
-#use Devel::Comments;
+#use Smart::Comments;
+
 
 # use Math::NumSeq::Base::File;
 # use Math::NumSeq::Base::FileWriter;
 
 # use constant name => 'Aronson\'s Sequence';
 use constant description => ('Aronson\'s sequence of the positions of letter "T" in self-referential "T is the first, fourth, ...".  Or French "E est la premiere, deuxieme, ...".  See the Math::Aronson module for details.');
+use constant i_start => 1;
 use constant values_min => 1;
 use constant characteristic_monotonic => 1;
 use constant parameter_info_array =>
@@ -91,6 +92,13 @@ use constant parameter_info_array =>
 #    A072422    Latin N
 #    A072423    Latin T
 #
+#    A091387 aronson mod 13
+#    A091388 aronson mod 14
+#    A091389 aronson mod 15
+#    A091390 aronson mod 16
+#    A091391 aronson mod 17
+#    A089613 "the partial sums ..."
+
 my %oeis_anum =
   # lang,letter,conjunctions,lying
   ('en,t,0,0' => 'A005224',  # english T, no conjunctions
@@ -152,6 +160,7 @@ sub oeis_anum {
 # }
 sub rewind {
   my ($self) = @_;
+  ### rewind() ...
 
   require Math::Aronson;
   my $lang = ($self->{'lang'} || 'en');
@@ -169,10 +178,9 @@ sub rewind {
   # }
   # my $hi = $self->{'hi'};
 
-  $self->{'i'} = 0;
+  $self->{'i'} = $self->i_start;
   $self->{'aronson'} = Math::Aronson->new
-    (# hi                   => $hi,
-     lang                 => $lang,
+    (lang                 => $lang,
      letter               => $letter,
      without_conjunctions => ! $conjunctions,
      lying                => $lying,
@@ -180,8 +188,9 @@ sub rewind {
 }
 sub next {
   my ($self) = @_;
-  ### Aronson next(): $self->{'i'}
-  return ($self->{'i'}++, $self->{'aronson'}->next);
+  ### Aronson next(): "i=$self->{'i'}"
+  my $value = $self->{'aronson'}->next or return;
+  return ($self->{'i'}++, $value);
 }
 
 1;
@@ -236,7 +245,7 @@ http://user42.tuxfamily.org/math-aronson/index.html
 
 =head1 LICENSE
 
-Math-Aronson is Copyright 2010, 2011 Kevin Ryde
+Math-Aronson is Copyright 2010, 2011, 2012 Kevin Ryde
 
 Math-Aronson is free software; you can redistribute it and/or modify it
 under the terms of the GNU General Public License as published by the Free

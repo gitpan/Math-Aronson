@@ -1,6 +1,6 @@
 --- #YAML:1.0
 name:               Math-Aronson
-version:            7
+version:            8
 abstract:           Generate Aronson's sequence.
 author:
     - Kevin Ryde <user42@zip.com.au>
@@ -24,34 +24,16 @@ no_index:
         - xt
         - devel
         - examples
-generated_by:       ExtUtils::MakeMaker version 6.56
+generated_by:       ExtUtils::MakeMaker version 6.57_05
 meta-spec:
     url:      http://module-build.sourceforge.net/META-spec-v1.4.html
     version:  1.4
 optional_features:
-    maximum_devel:
-        description:  Stuff used variously for development.
-        requires:
-            File::Spec:           0
-            Lingua::ES::Numeros:  0
-            Parse::CPAN::Meta:    0
-            PerlIO::locale:       0.06
-            Smart::Comments:      0
-            Test::DistManifest:   0
-            Test::Pod:            1.00
-            Test::Synopsis:       0
-            Test::YAML::Meta:     0.15
-            Unicode::CharName:    0
-            Unicode::Normalize:   0
-            warnings::unused:     0
-            YAML:                 0
-            YAML::Syck:           0
-            YAML::Tiny:           0
-            YAML::XS:             0
     maximum_tests:
         description:  Have "make test" do as much as possible.
         requires:
-            Test::Weaken:  3
+            Test::Weaken:         2.002
+            Test::Weaken::ExtraBits:  1
 recommends:
     Lingua::Any::Numbers:  0.21
     Unicode::Normalize:   0

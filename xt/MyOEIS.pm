@@ -1,4 +1,4 @@
-# Copyright 2010, 2011 Kevin Ryde
+# Copyright 2010, 2011, 2012 Kevin Ryde
 
 # MyOEIS.pm is shared by several distributions.
 #
@@ -19,7 +19,7 @@ package MyOEIS;
 use strict;
 
 # uncomment this to run the ### lines
-#use Devel::Comments;
+#use Smart::Comments;
 
 my $without;
 
@@ -34,120 +34,56 @@ sub import {
   }
 }
 
-sub oeis_dir {
-  require File::Spec;
-  if ($without) {
-    return undef;
-  }
-  return File::Spec->catfile ($ENV{'HOME'} || File::Spec->curdir,
-                              'OEIS');
-}
-
-sub anum_validate {
-  my ($anum) = @_;
-  unless ($anum =~ /^A?0*([0-9]{6,})$/) {
-    require Carp;
-    Carp::croak("Bad A-number: $anum");
-  }
-  return $1;
-}
-
-sub anum_to_bfile {
-  my ($num, $prefix) = @_;
-  ### anum_to_bfile: @_
-  $prefix ||= 'b';
-  return sprintf '%s%06d.txt', $prefix, $num;
-}
-sub anum_to_html {
-  my ($num, $suffix) = @_;
-  ### anum_to_html: @_
-  $suffix ||= '.html';
-  return sprintf 'A%06d%s', $num, $suffix;
-}
-
 sub read_values {
-  my ($anum) = @_;
-  $anum = anum_validate ($anum);
+  my ($anum, %option) = @_;
 
   if ($without) {
     return;
   }
 
-  my ($aref, $lo, $filename) = _read_values($anum)
-    or return;
-  # MyTestHelpers::diag("$filename read ",scalar(@$aref)," values");
-  return ($aref, $lo, $filename);
-}
+  my $seq = eval { require Math::NumSeq::OEIS::File;
+                   Math::NumSeq::OEIS::File->new (anum => $anum) };
+  if (! $seq) {
+    my $error = $@;
+    MyTestHelpers::diag ("$anum not available: ", $error);
+    return;
+  }
 
-sub _read_values {
-  my ($anum) = @_;
+  my @bvalues;
+  my $count = 0;
+  my $lo = 0;
+  if (($lo, my $value) = $seq->next) {
+    push @bvalues, $value;
+    while ((undef, $value) = $seq->next) {
+      push @bvalues, $value;
+    }
+  }
 
-  require POSIX;
-  my $max_value = POSIX::FLT_RADIX() ** (POSIX::DBL_MANT_DIG()-5);
+  my $desc = "$anum has ".scalar(@bvalues)." values to $bvalues[-1]";
+  if (my $max_count = $option{'max_count'}) {
+    if (@bvalues > $max_count) {
+      $#bvalues = $option{'max_count'} - 1;
+      $desc .= ", shorten to ".scalar(@bvalues);
+    }
+  }
 
-  require File::Spec;
-  foreach my $basefile (anum_to_bfile($anum,'a'), anum_to_bfile($anum)) {
-    my $filename = File::Spec->catfile (oeis_dir(), $basefile);
-    ### $basefile
-    ### $filename
-
-    if (open FH, "<$filename") {
-      my @array;
-      my $lo;
-      while (defined (my $line = <FH>)) {
-        $line =~ s/^\s+//;     # leading white space
-        next if $line eq '';   # ignore blank lines
-        next if $line =~ /^#/; # ignore comment lines, eg. b006450.txt
-        my ($i, $n) = split /\s+/, $line;
-        if (! defined $lo) {
-          $lo = $i;
+  if (my $max_value = $option{'max_value'}) {
+    if ($max_value ne 'unlimited') {
+      for (my $i = 0; $i <= $#bvalues; $i++) {
+        if ($bvalues[$i] > $max_value) {
+          $#bvalues = $i-1;
+          if (@bvalues) {
+            $desc .= ", shorten to max ".$bvalues[-1];
+          } else {
+            $desc .= ", shorten to nothing";
+          }
         }
-        if (! (defined $n && $n =~ /^-?[0-9]+$/)) {
-          die "oops, bad line in $filename: '$line'";
-        }
-        if ($n > $max_value) {
-          # MyTestHelpers::diag("$filename stop at bignum value: $line");
-          last;
-        }
-        push @array, $n;
       }
-      close FH or die;
-      return (\@array, $lo, $filename);
     }
-    ### no bfile: $!
   }
+  MyTestHelpers::diag ($desc);
 
-  foreach my $basefile (anum_to_html($anum), anum_to_html($anum,'.htm')) {
-    my $filename = File::Spec->catfile (oeis_dir(), $basefile);
-    ### $basefile
-    ### $filename
-    unless (open FH, "< $filename") {
-      ### no html: $!
-      next;
-    }
-    my $contents = do { local $/; <FH> }; # slurp
-    close FH or die;
-
-    unless ($contents =~ /OFFSET(\s*<[^>]*>)*\s*([0-9-]+)/s) {
-      MyTestHelpers::diag("$filename oops OFFSET not found");
-      die;
-    }
-    my $lo = $2;
-
-    # fragile grep out of the html ...
-    $contents =~ s{>graph</a>.*}{};
-    $contents =~ m{.*<tt>([^<]+)</tt>};
-    my $list = $1;
-    unless ($list =~ m{^([0-9,-]|\s)+$}) {
-      MyTestHelpers::diag("$filename oops list of values not found");
-      die;
-    }
-    my @array = split /[, \t\r\n]+/, $list;
-    ### $list
-    ### @array
-    return (\@array, $lo, $filename);
-  }
-  return;
+  return (\@bvalues, $lo, $seq->{'filename'});
 }
 
 # with Y reckoned increasing downwards

@@ -18,7 +18,6 @@ devel/sloane-a.pl
 devel/unaccent.pl
 examples/terminate.pl
 inc/MyMakeMakerExtras.pm
-inc/MyModuleUtils_without.pm
 lib/Math/Aronson.pm
 lib/Math/NumSeq/Aronson.pm
 lib/Math/NumSeq/OEIS/Catalogue/Plugin/Aronson.pm
@@ -31,7 +30,6 @@ t/Aronson-NumSeq.t
 t/Aronson-weaken.t
 t/Aronson.t
 t/MyTestHelpers.pm
-t/Test/Weaken/ExtraBits.pm
 xt/0-examples-xrefs.t
 xt/0-file-is-part-of.t
 xt/0-META-read.t
@@ -43,4 +41,14 @@ xt/0-Test-Synopsis.t
 xt/0-Test-YAML-Meta.t
 xt/Aronson-NumSeq-oeis.t
 xt/MyOEIS.pm
+xtools/my-check-copyright-years.sh
+xtools/my-check-file-part-of.sh
+xtools/my-check-spelling.sh
+xtools/my-deb.sh
+xtools/my-diff-prev.sh
+xtools/my-kwalitee.sh
+xtools/my-manifest.sh
+xtools/my-pc.sh
+xtools/my-tags.sh
+xtools/my-wunused.sh
 META.yml                                 Module meta-data (added by MakeMaker)

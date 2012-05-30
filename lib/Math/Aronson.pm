@@ -24,7 +24,7 @@ use Carp;
 #use Devel::Comments;
 
 use vars '$VERSION';
-$VERSION = 7;
+$VERSION = 8;
 
 # maybe a hi=>$limit option to stop the ret or queue building up beyond a
 # desired point

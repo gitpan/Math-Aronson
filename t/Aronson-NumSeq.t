@@ -25,7 +25,7 @@ use lib 't';
 use MyTestHelpers;
 MyTestHelpers::nowarnings();
 
-my $test_count = 28;
+my $test_count = (tests => 28)[1];
 plan tests => $test_count;
 
 if (! eval { require Module::Util; 1 }) {
@@ -65,7 +65,7 @@ sub numeq_array {
 # VERSION
 
 {
-  my $want_version = 7;
+  my $want_version = 8;
   ok ($Math::NumSeq::Aronson::VERSION, $want_version, 'VERSION variable');
   ok (Math::NumSeq::Aronson->VERSION,  $want_version, 'VERSION class method');
 

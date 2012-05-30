@@ -26,7 +26,6 @@ BEGIN {
 
 use lib 't';
 use MyTestHelpers;
-use Test::Weaken::ExtraBits;
 MyTestHelpers::nowarnings();
 
 require Math::Aronson;
@@ -36,9 +35,15 @@ my $have_test_weaken = eval "use Test::Weaken 2.002; 1" || 0;
 if (! $have_test_weaken) {
   MyTestHelpers::diag ("Test::Weaken 2.002 not available -- $@");
 }
-my $skip = ($have_test_weaken
-            ? undef
-            : "due to Test::Weaken 2.002 not available");
+my $have_test_weaken_extrabits = eval "use Test::Weaken::ExtraBits 1; 1" || 0;
+if (! $have_test_weaken_extrabits) {
+  MyTestHelpers::diag ("Test::Weaken::ExtraBits 1 not available -- $@");
+}
+my $skip = (! $have_test_weaken
+            ? "due to Test::Weaken 2.002 not available"
+            : ! $have_test_weaken_extrabits
+            ? "due to Test::Weaken::ExtraBits 1 not available"
+            : undef);
 
 sub my_ordinal {
   return 'foo';
@@ -54,7 +59,7 @@ foreach my $options ([],
     ({ constructor => sub {
          return Math::Aronson->new (@$options);
        },
-       ignore => \&Test::Weaken::ExtraBits::ignore_global_function,
+       ignore => \&Test::Weaken::ExtraBits::ignore_global_functions,
      });
   skip ($skip,
         $leaks||0,
