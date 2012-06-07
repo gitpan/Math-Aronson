@@ -1,4 +1,4 @@
-# Copyright 2010, 2011 Kevin Ryde
+# Copyright 2010, 2011, 2012 Kevin Ryde
 
 # This file is part of Math-Aronson.
 #
@@ -24,7 +24,7 @@ use Carp;
 #use Devel::Comments;
 
 use vars '$VERSION';
-$VERSION = 8;
+$VERSION = 9;
 
 # maybe a hi=>$limit option to stop the ret or queue building up beyond a
 # desired point
@@ -427,7 +427,7 @@ http://user42.tuxfamily.org/math-aronson/index.html
 
 =head1 LICENSE
 
-Math-Aronson is Copyright 2010, 2011 Kevin Ryde
+Math-Aronson is Copyright 2010, 2011, 2012 Kevin Ryde
 
 Math-Aronson is free software; you can redistribute it and/or modify it
 under the terms of the GNU General Public License as published by the Free

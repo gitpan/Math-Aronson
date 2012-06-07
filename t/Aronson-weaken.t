@@ -1,6 +1,6 @@
 #!/usr/bin/perl -w
 
-# Copyright 2010, 2011 Kevin Ryde
+# Copyright 2010, 2011, 2012 Kevin Ryde
 
 # This file is part of Math-Aronson.
 #
@@ -20,9 +20,7 @@
 use 5.004;
 use strict;
 use Test;
-BEGIN {
-  plan tests => 5;
-}
+plan tests => 5;
 
 use lib 't';
 use MyTestHelpers;
@@ -55,7 +53,7 @@ foreach my $options ([],
                      [ lang => 'fr', conjunctions => 0 ],
                      [ ordinal_func => \&my_ordinal ],
                     ) {
-  my $leaks = $have_test_weaken && Test::Weaken::leaks
+  my $leaks = !$skip && Test::Weaken::leaks
     ({ constructor => sub {
          return Math::Aronson->new (@$options);
        },
